@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOYZ DOWNLOADER</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,Arial}
+body{background:#070708;color:#fff;min-height:100vh;padding-bottom:40px}
+.page{display:none}.page.active{display:block}
+.top{max-width:480px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:900;font-size:22px}.logo span{color:#00ff88}.logo i{background:#00ff88;color:#000;padding:6px 8px;border-radius:10px;margin-right:6px}
+.badge{background:#00ff88;color:#000;font-size:10px;font-weight:900;padding:7px 12px;border-radius:20px}
+.wrap{max-width:480px;margin:0 auto;padding:0 16px}
+.card{background:#111113;border:1px solid #232329;border-radius:24px;padding:22px;position:relative;z-index:10}
+.avatar{width:82px;height:82px;margin:0 auto 14px;border-radius:50%;background:linear-gradient(135deg,#00ff88,#00ccff);display:flex;align-items:center;justify-content:center;font-size:34px}
+h1{font-size:25px;text-align:center;line-height:1.25;font-weight:900}h1 .gr{color:#00ff88}
+.sub{color:#9ca3af;font-size:13px;text-align:center;margin:10px 0 16px}
+.stats{display:flex;gap:8px;margin:14px 0}.stat{flex:1;background:#000;border:1px solid #222;border-radius:14px;padding:10px;text-align:center}.stat b{display:block;font-size:15px;color:#00ff88}.stat span{font-size:10px;color:#888}
+.input-row{position:relative;margin-bottom:12px}.input-row .ic{position:absolute;left:14px;top:50%;transform:translateY(-50%);z-index:2}.input-row input{width:100%;padding:15px 14px 15px 44px;border-radius:14px;background:#000;border:1px solid #2a2a30;color:#fff;outline:none;font-size:14px}
+.btn{width:100%;padding:17px;border:none;border-radius:14px;background:#00ff88;color:#000;font-weight:900;cursor:pointer;font-size:16px;position:relative;z-index:99 !important;pointer-events:auto !important;display:block;margin-top:10px}
+.btn:active{transform:scale(.96)}
+.btn-ghost{background:#1e1e22;color:#fff}
+.btn-hd{background:#fff !important;color:#000 !important}
+.btn-wa{background:#25D366 !important}
+.btn-wa2{background:transparent !important;color:#25D366 !important;border:2px solid #25D366}
+.tabs{display:flex;gap:6px;background:#000;padding:5px;border-radius:14px;margin:12px 0}.tabs button{flex:1;padding:11px 4px;border:none;border-radius:10px;background:transparent;color:#aaa;font-weight:700;font-size:12px;cursor:pointer}.tabs button.on{background:#fff;color:#000}
+.video-box{border-radius:16px;overflow:hidden;background:#000;margin-top:16px;position:relative}.video-box video{width:100%;display:block}
+.tag{display:inline-block;background:#00ff88;color:#000;font-size:11px;font-weight:900;padding:6px 12px;border-radius:20px;margin:8px 0}
+.mp3-box{background:#000;border:1px solid #222;border-radius:16px;padding:14px;margin-top:12px}.mp3-box audio{width:100%;margin-top:8px}
+.spin{width:36px;height:36px;border:3px solid #222;border-top-color:#00ff88;border-radius:50%;margin:0 auto 10px;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+#loading{display:none;text-align:center;padding:16px;color:#00ff88;font-weight:700}
+.progress{height:4px;background:#222;border-radius:10px;overflow:hidden;margin:10px 0}.progress i{display:block;height:100%;background:#00ff88;width:0}
+.link{color:#00ff88;text-align:center;font-size:13px;margin-top:14px;cursor:pointer;padding:12px;position:relative;z-index:99}
+.nav{max-width:480px;margin:12px auto;display:flex;gap:8px;padding:0 16px}.nav button{flex:1;padding:12px;border:none;border-radius:12px;background:#111;color:#aaa;font-weight:700;cursor:pointer}
+.live-box{display:flex;align-items:center;justify-content:center;gap:8px;background:#000;border:1px solid #222;border-radius:12px;padding:10px;margin:10px 0;font-size:12px}
+.live-dot{width:9px;height:9px;background:#00ff88;border-radius:50%;animation:blink 1s infinite}
+.live-num{color:#00ff88;font-weight:900}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:#fff;color:#000;padding:12px 20px;border-radius:20px;font-weight:800;font-size:13px;z-index:10000;transition:.35s}.toast.show{transform:translateX(-50%) translateY(0)}
+.foto-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.foto-item{border-radius:14px;overflow:hidden;background:#000}.foto-item img{width:100%;height:175px;object-fit:cover;display:block}
+</style>
+</head>
+<body>
+<div style="background:#00ff88;color:#000;font-weight:900;text-align:center;padding:9px;font-size:13px">welcome to doyz•downloader pray it grows let's try ✨</div>
+<div class="top"><div class="logo"><i>⚡</i>DOYZ<span>DL</span></div><div class="badge" id="userBadge">👤 GUEST</div></div>
+<div id="page-login" class="page active"><div class="wrap"><div class="card" style="text-align:center"><div class="avatar">🔥</div><h1>Welcome To<br><span class="gr">DOYZ DOWNLOADER</span></h1><p class="sub">pray it grows let's try ✨</p>
+<div class="live-box"><span class="live-dot"></span><span><span class="live-num" id="liveCount1">127</span> online</span><span>• Total: <b id="totalVisit1">1,204</b></span></div>
+<div class="stats"><div class="stat"><b>1080p</b><span>HD JERNIH</span></div><div class="stat"><b>🔊 POP</b><span>SUARA KLIK</span></div><div class="stat"><b>📥 FILE</b><span>KE GALERI</span></div></div>
+<div class="input-row"><span class="ic">👤</span><input id="loginUser" placeholder="Username / Email"></div>
+<div class="input-row"><span class="ic">🔒</span><input id="loginPass" type="password" placeholder="Password"></div>
+<button type="button" class="btn" id="btnLogin" onclick="doLogin()">🚀 LOGIN & MASUK</button>
+<button type="button" class="btn btn-ghost" id="btnToReg">Daftar Gratis</button>
+<div class="link" id="btnGuest">Lanjut sebagai <b>Guest →</b></div>
+</div></div></div>
+<div id="page-register" class="page"><div class="wrap"><div class="card" style="text-align:center"><div class="avatar">✨</div><h1>Daftar Akun<br><span class="gr">DOYZ DOWNLOADER</span></h1><div class="input-row" style="margin-top:14px"><span class="ic">😎</span><input id="regNama" placeholder="Nama Lu"></div><div class="input-row"><span class="ic">👤</span><input id="regUser" placeholder="Username"></div><div class="input-row"><span class="ic">🔒</span><input id="regPass" type="password" placeholder="Password"></div><button class="btn" id="btnReg">✅ DAFTAR & MASUK</button><div class="link" id="btnToLogin">Udah punya akun? Login</div></div></div></div>
+<div id="page-home" class="page"><div class="wrap"><div class="card"><h1>DOYZ Downloader<br><span class="gr">Jernih HD</span></h1><p class="sub">Halo <b id="haloNama" style="color:#00ff88">Pung</b></p>
+<div class="live-box"><span class="live-dot"></span><span><span class="live-num" id="liveCount2">127</span> online</span><span>• 🔥 <b id="totalVisit2">1,204</b> total</span></div>
+<div id="adminBox"></div>
+<div class="input-row"><span class="ic">🔗</span><input id="link" placeholder="Tempel link TikTok disini..."></div>
+<div class="tabs"><button id="t1" class="on">✨ AUTO</button><button id="t2">🎬 VIDEO</button><button id="t3">📸 FOTO</button><button id="t4">🎵 MP3</button></div>
+<button class="btn" id="btnDl">⬇ DOWNLOAD</button>
+<div id="loading"><div class="spin"></div><span>Lagi ambil HD...</span><div class="progress"><i id="progBar"></i></div></div>
+<div id="done"></div><div id="done2"></div>
+</div><div class="nav"><button id="navHome">🏠 Home</button><button id="navHist">📜 History</button><button id="navLogout">🚪 Logout</button></div><div id="historyBox" class="card" style="display:none;margin-top:14px"><h1 style="font-size:18px;text-align:left">📜 History</h1><div id="histList"></div></div></div></div>
+<div class="toast" id="toast">✅ Berhasil bro!</div>
+<script>
+let isAdmin=false, mode='auto', curHD='', curPlay='', curTitle='', history=JSON.parse(localStorage.getItem('pung_hist')||'[]');
+function toast(t){let e=document.getElementById('toast');e.innerText=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),3500)}
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
+function doLogin(){ let u=document.getElementById('loginUser').value.trim(); let p=document.getElementById('loginPass').value.trim(); if(u==='doyz_admin' && p==='doyz123'){ masuk('Admin DOYZ', true); return; } masuk(u||'Pung', false); }
+function masuk(n, admin){ isAdmin=admin; document.getElementById('haloNama').innerText=n; let b=document.getElementById('userBadge'); if(admin){ b.innerText='👤 '+n.toUpperCase(); document.getElementById('adminBox').innerHTML='<div style="display:none">admin</div>'; }else{ b.innerText='👤 '+n.toUpperCase(); document.getElementById('adminBox').innerHTML=''; } showPage('page-home'); toast('✅ Welcome '+n); }
+let totalVisit=parseInt(localStorage.getItem('doyz_total')||'1204'); totalVisit++; localStorage.setItem('doyz_total', totalVisit);
+let liveCount=120+Math.floor(Math.random()*40);
+function updateLive(){ liveCount+=Math.floor(Math.random()*5)-2; if(liveCount<80) liveCount=85; if(liveCount>220) liveCount=210; document.getElementById('liveCount1').innerText=liveCount; document.getElementById('liveCount2').innerText=liveCount; document.getElementById('totalVisit1').innerText=totalVisit.toLocaleString('id-ID'); document.getElementById('totalVisit2').innerText=totalVisit.toLocaleString('id-ID'); }
+updateLive(); setInterval(updateLive,3000);
+document.getElementById('btnToReg').onclick=()=>showPage('page-register');
+document.getElementById('btnGuest').onclick=()=>masuk('Guest',false);
+document.getElementById('btnToLogin').onclick=()=>showPage('page-login');
+document.getElementById('btnReg').onclick=()=>{let n=document.getElementById('regNama').value.trim()||'Pung'; masuk(n,false)};
+document.getElementById('navLogout').onclick=()=>{isAdmin=false; showPage('page-login')};
+document.getElementById('navHist').onclick=()=>{document.getElementById('historyBox').style.display='block';document.getElementById('histList').innerHTML=history.length?history.map(h=>`<div class="hist" style="background:#000;padding:12px;border-radius:12px;margin-top:10px">🎬 ${h.title}<br><small style="color:#00ff88">${h.time}</small></div>`).join(''):'<p style="color:#888">Belum ada history</p>'};
+document.getElementById('navHome').onclick=()=>document.getElementById('historyBox').style.display='none';
+['t1','t2','t3','t4'].forEach((id,i)=>{document.getElementById(id).onclick=function(){document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('on'));this.classList.add('on');mode=['auto','video','foto','mp3'][i]}});
+document.getElementById('btnDl').onclick=dl;
+// ==== DOWNLOAD BENERAN - INI YANG GW BENERIN BRO ====
+async function downloadFile(url, filename){
+  toast('📥 Lagi download bro...');
+  try{
+    // Cara 1: Coba download langsung jadi file (paling enak di HP)
+    const res = await fetch(url, {mode:'cors'});
+    if(!res.ok) throw new Error('fetch gagal');
+    const blob = await res.blob();
+    if(blob.size < 1000) throw new Error('file kosong');
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = blobUrl; a.download = filename;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(blobUrl), 5000);
+    toast('✅ Masuk File / Download bro!');
+  }catch(e){
+    // Cara 2: Kalo di-block CORS, buka video di tab baru, lu tinggal tahan -> Save Video
+    toast('📱 Video kebuka, tahan video -> Save / Download');
+    window.open(url, '_blank');
+  }
+}
+async function dl(){ let link=document.getElementById('link').value.trim(); if(!link) return alert('Tempel link dulu bro'); let btn=document.getElementById('btnDl'); document.getElementById('loading').style.display='block'; document.getElementById('progBar').style.width='30%'; btn.innerText='⏳ LAGI DOWNLOAD...'; try{
+let api='https://www.tikwm.com/api/?url='+encodeURIComponent(link)+'&hd=1';
+let res=await fetch(api); let j=await res.json(); let d=j.data;
+if(!d || (!d.play && !d.hdplay)) throw new Error('Link ga valid bro');
+document.getElementById('progBar').style.width='85%';
+let hdUrl = d.hdplay || d.play;
+let biasaUrl = d.play || d.hdplay;
+curHD = hdUrl; curPlay = biasaUrl;
+curTitle=d.title||'Video TikTok'; let music=d.music||''; let isSlide=d.images && d.images.length>0;
+document.getElementById('loading').style.display='none'; document.getElementById('progBar').style.width='100%'; btn.innerText='⬇ DOWNLOAD';
+let box=document.getElementById('done'); let safeName=(curTitle.replace(/[^a-z0-9]/gi,'_').slice(0,40)||'doyz');
+let mp3Html=music?`<div class="mp3-box"><b>🎵 MP3</b><audio controls src="${music}"></audio><button class="btn" id="dlMp3" style="margin-top:10px">⬇ DOWNLOAD MP3 KE FILE</button></div>`:'';
+let shareHtml = isAdmin ? `<button class="btn btn-wa" id="btnSW">📱 BAGIKAN KE SW</button><button class="btn btn-wa2" id="btnWA">💬 BAGIKAN KE TEMAN</button>` : '';
+let html=''; if(mode==='mp3'){ html=`<span class="tag">🎵 MP3 ASLI</span>`+mp3Html+shareHtml; } else if(mode==='foto'||(mode==='auto'&&isSlide)){ let g=d.images.map((im,i)=>`<div class="foto-item"><img src="${im}"><button class="btn" data-foto="${im}" style="padding:12px;font-size:12px">⬇ DOWNLOAD FOTO ${i+1}</button></div>`).join(''); html=`<span class="tag">📸 FOTO ASLI • ${d.images.length} FOTO</span><div class="foto-grid">${g}</div>${shareHtml}${mp3Html}`; } else { html=`<span class="tag">🎬 VIDEO JERNIH • NO WM</span><div class="video-box"><video src="${curHD}" controls playsinline preload="metadata"></video></div><p style="font-size:14px;font-weight:700;margin-top:10px">${curTitle}</p><p style="font-size:12px;color:#00ff88">@${d.author?.unique_id||''}</p><button class="btn btn-hd" id="dlHD">⬇ DOWNLOAD JERNIH</button><button class="btn" id="dlBiasa">⬇ DOWNLOAD VIDEO KE FILE</button>${shareHtml}${mp3Html}`; }
+box.innerHTML=html;
+if(document.getElementById('dlHD')) document.getElementById('dlHD').onclick=()=>downloadFile(curHD, safeName+'_DOYZ_JERNIH_1080p60.mp4');
+if(document.getElementById('dlBiasa')) document.getElementById('dlBiasa').onclick=()=>downloadFile(curPlay, safeName+'_DOYZ_720p30.mp4');
+if(document.getElementById('dlMp3')) document.getElementById('dlMp3').onclick=()=>downloadFile(music, safeName+'_DOYZ.mp3');
+box.querySelectorAll('[data-foto]').forEach(b=>b.onclick=()=>downloadFile(b.dataset.foto, safeName+'_DOYZ_FOTO.jpg'));
+if(document.getElementById('btnSW')) document.getElementById('btnSW').onclick=async()=>{ try{ if(navigator.share){ let r=await fetch(curHD); let bl=await r.blob(); let f=new File([bl],'doyz-jernih.mp4',{type:'video/mp4'}); if(navigator.canShare({files:[f]})){ await navigator.share({files:[f], title:curTitle}); return; } } }catch(e){} window.open('https://wa.me/?text='+encodeURIComponent(curTitle+' '+curHD),'_blank'); };
+if(document.getElementById('btnWA')) document.getElementById('btnWA').onclick=()=>{ let text=`🔥 DOYZ DOWNLOADER\n\n${curTitle}\n${curHD}\n\nDownload di: doyzdownloader.vercel.app`; window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank'); };
+document.getElementById('done2').innerHTML=`<button class="btn" id="btnDl2" style="margin-top:16px">⬇ DOWNLOAD LAGI</button>`; document.getElementById('btnDl2').onclick=()=>document.getElementById('link').scrollIntoView({behavior:'smooth'});
+history.unshift({title:curTitle,time:new Date().toLocaleString()}); localStorage.setItem('pung_hist',JSON.stringify(history.slice(0,10))); toast('✅ Berhasil!'); box.scrollIntoView({behavior:'smooth'}); }catch(e){ alert(e.message); document.getElementById('loading').style.display='none'; btn.innerText='⬇ DOWNLOAD'; } }
+</script>
+</body>
+</html>
