@@ -3,91 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>DOYZ CLONER V1.4 BETA - iOS</title>
+<title>DOYZ CLONER V1.5 - iOS + Animasi</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Inter',Arial}
-body{background:#f2f2f7;color:#000;min-height:100vh;-webkit-font-smoothing:antialiased}
-.page{display:none}.page.active{display:block;animation:fade .35s ease both}
-@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Inter',Arial;-webkit-tap-highlight-color:transparent}
+body{background:#f2f2f7;color:#000;min-height:100vh;overflow-x:hidden}
+.page{display:none}.page.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes popIn{0%{opacity:0;transform:scale(.9)}60%{transform:scale(1.03)}100%{opacity:1;transform:scale(1)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes bounceIn{0%{transform:scale(.8);opacity:0}50%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+@keyframes slideIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
-.topbar{max-width:520px;margin:0 auto;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(20px);background:rgba(255,255,255,.8);position:sticky;top:0;z-index:10}
-.logo{font-weight:900;font-size:19px}.logo b{color:#007aff}
+@keyframes shimmer{0%{background-position:-200px 0}100%{background-position:200px 0}}
+.anim{animation:fadeUp .5s ease both}.anim1{animation:fadeUp .5s .05s ease both}.anim2{animation:fadeUp .5s .1s ease both}.anim3{animation:fadeUp .5s .15s ease both}.anim4{animation:fadeUp .5s .2s ease both}
+.topbar{max-width:520px;margin:0 auto;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(255,255,255,.85);position:sticky;top:0;z-index:10;animation:slideIn .5s ease both}
+.logo{font-weight:900;font-size:19px;animation:float 3s ease-in-out infinite}.logo b{color:#007aff}
 .pill{background:#e5e5ea;padding:6px 11px;border-radius:20px;font-size:11px;font-weight:700;color:#007aff}
 .wrap{max-width:520px;margin:0 auto;padding:16px 14px 30px}
-.card{background:#fff;border-radius:24px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.card{background:#fff;border-radius:24px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,.08);animation:popIn .5s ease both}
 h1{font-size:23px;font-weight:900;letter-spacing:-.5px}h1 span{color:#007aff}
 .sub{color:#8a8a8e;font-size:13px;margin:8px 0 14px}
-.input-box{display:flex;gap:8px;background:#f2f2f7;border-radius:14px;padding:6px 6px 6px 14px;align-items:center}
+.input-box{display:flex;gap:8px;background:#f2f2f7;border-radius:14px;padding:6px 6px 6px 14px;align-items:center;transition:.2s}
+.input-box:focus-within{outline:2px solid #007aff;transform:scale(1.01)}
 .input-box input{flex:1;background:transparent;border:none;outline:none;color:#000;font-size:14px;min-width:0}
-.btn-main{width:100%;padding:16px;border:none;border-radius:16px;background:#007aff;color:#fff;font-weight:800;font-size:15px;cursor:pointer;margin-top:12px;box-shadow:0 6px 20px rgba(0,122,255,.3)}
+.btn-main{width:100%;padding:16px;border:none;border-radius:16px;background:#007aff;color:#fff;font-weight:800;font-size:15px;cursor:pointer;margin-top:12px;box-shadow:0 6px 20px rgba(0,122,255,.3);transition:.2s;position:relative;z-index:5;pointer-events:auto}
+.btn-main:hover{transform:translateY(-1px);box-shadow:0 10px 25px rgba(0,122,255,.4)}
 .btn-main:active{transform:scale(.97)}
-.input-row{position:relative;margin-bottom:12px}.input-row input{width:100%;padding:15px 14px 15px 42px;border-radius:14px;background:#f2f2f7;border:none;color:#000;outline:none;font-size:14px}
-.input-row .ic{position:absolute;left:13px;top:50%;transform:translateY(-50%)}
-.btn{width:100%;padding:15px;border:none;border-radius:14px;background:#007aff;color:#fff;font-weight:800;cursor:pointer}
+.input-row{position:relative;margin-bottom:12px}.input-row input{width:100%;padding:15px 14px 15px 42px;border-radius:14px;background:#f2f2f7;border:none;color:#000;outline:none;font-size:14px;transition:.2s}.input-row input:focus{outline:2px solid #007aff;transform:scale(1.01)}
+.input-row .ic{position:absolute;left:13px;top:50%;transform:translateY(-50%);pointer-events:none}
+.btn{width:100%;padding:15px;border:none;border-radius:14px;background:#007aff;color:#fff;font-weight:800;cursor:pointer;transition:.2s;pointer-events:auto;position:relative;z-index:5}
+.btn:active{transform:scale(.97)}
 .btn-ghost{background:#f2f2f7;color:#000;margin-top:10px}
-.tabs{display:flex;gap:6px;background:#f2f2f7;padding:5px;border-radius:14px;margin:14px 0}.tabs button{flex:1;padding:11px;border:none;border-radius:10px;background:transparent;color:#8a8a8e;font-weight:700;cursor:pointer}.tabs button.on{background:#fff;color:#000;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.tabs{display:flex;gap:6px;background:#f2f2f7;padding:5px;border-radius:14px;margin:14px 0}.tabs button{flex:1;padding:11px;border:none;border-radius:10px;background:transparent;color:#8a8a8e;font-weight:700;cursor:pointer;transition:.2s}.tabs button.on{background:#fff;color:#000;box-shadow:0 2px 8px rgba(0,0,0,.1)}
 textarea{width:100%;height:420px;background:#1c1c1e;color:#a6e3ff;border-radius:16px;padding:14px;font-family:Menlo,monospace;font-size:11px;line-height:1.6;outline:none;resize:vertical;border:none}
-#previewBox{width:100%;height:420px;background:#fff;border-radius:18px;overflow:hidden;display:none;box-shadow:0 4px 20px rgba(0,0,0,.1)}
+#previewBox{width:100%;height:420px;background:#fff;border-radius:18px;overflow:hidden;display:none;box-shadow:0 4px 20px rgba(0,0,0,.1);animation:fadeUp .4s ease both}
 #previewBox iframe{width:100%;height:100%;border:none}
-.row{display:flex;gap:8px;margin-top:10px}.btn2{flex:1;padding:13px;border:none;border-radius:12px;font-weight:800;cursor:pointer}.btn2:active{transform:scale(.95)}
-.stats{display:flex;gap:8px;margin:12px 0}.stat{flex:1;background:#f2f2f7;border-radius:14px;padding:10px;text-align:center}.stat b{color:#007aff;display:block}.stat span{font-size:10px;color:#8a8a8e}
-.link{color:#007aff;text-align:center;font-size:13px;margin-top:12px;cursor:pointer;padding:10px}
-.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(80px);background:#000;color:#fff;padding:12px 20px;border-radius:20px;font-weight:700;font-size:13px;z-index:9999;transition:.35s}.toast.show{transform:translateX(-50%) translateY(0)}
+.row{display:flex;gap:8px;margin-top:10px}.btn2{flex:1;padding:13px;border:none;border-radius:12px;font-weight:800;cursor:pointer;transition:.2s;pointer-events:auto;position:relative;z-index:5}.btn2:active{transform:scale(.95)}
+.stats{display:flex;gap:8px;margin:12px 0}.stat{flex:1;background:#f2f2f7;border-radius:14px;padding:10px;text-align:center;animation:bounceIn .6s ease both}.stat b{color:#007aff;display:block}.stat span{font-size:10px;color:#8a8a8e}
+.link{color:#007aff;text-align:center;font-size:13px;margin-top:12px;cursor:pointer;padding:12px;pointer-events:auto;position:relative;z-index:5}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(80px);background:#000;color:#fff;padding:12px 20px;border-radius:20px;font-weight:700;font-size:13px;z-index:9999;transition:.35s;pointer-events:none}.toast.show{transform:translateX(-50%) translateY(0);animation:fadeUp .3s ease both}
 .spin{width:28px;height:28px;border:3px solid #e5e5ea;border-top-color:#007aff;border-radius:50%;margin:0 auto 8px;animation:spin .8s linear infinite}
 #loading{display:none;text-align:center;padding:14px;color:#007aff;font-weight:700;font-size:13px}
 .progress{height:4px;background:#e5e5ea;border-radius:10px;overflow:hidden;margin:8px 0}.progress i{display:block;height:100%;background:#007aff;width:0;transition:.4s}
 .hide{display:none!important}
-.mode-box{display:flex;gap:6px;margin:12px 0}.mode-box button{flex:1;padding:10px;border:none;background:#f2f2f7;color:#666;border-radius:12px;font-weight:700;cursor:pointer;font-size:12px}.mode-box button.on{background:#007aff;color:#fff}
-.ios-badge{background:linear-gradient(135deg,#007aff,#5856d6);color:#fff;padding:8px 12px;border-radius:12px;font-size:12px;font-weight:700;text-align:center;margin-bottom:12px}
+.mode-box{display:flex;gap:6px;margin:12px 0}.mode-box button{flex:1;padding:10px;border:none;background:#f2f2f7;color:#666;border-radius:12px;font-weight:700;cursor:pointer;font-size:12px;transition:.2s;pointer-events:auto}.mode-box button.on{background:#007aff;color:#fff;transform:scale(1.02)}
+.ios-badge{background:linear-gradient(135deg,#007aff,#5856d6);color:#fff;padding:8px 12px;border-radius:12px;font-size:12px;font-weight:700;text-align:center;margin-bottom:12px;animation:float 3s ease-in-out infinite}
+.emoji-float{animation:float 2.5s ease-in-out infinite;display:inline-block}
 </style>
 </head>
 <body>
 <div id="page-login" class="page active">
-<div class="topbar"><div class="logo"> DOYZ <b>CLONER</b></div><div class="pill">V1.4 BETA • iOS</div></div>
+<div class="topbar"><div class="logo"> DOYZ <b>CLONER</b></div><div class="pill">V1.5 • iOS + ANIMASI</div></div>
 <div class="wrap"><div class="card" style="text-align:center">
-<div style="font-size:48px">📱</div><h1 style="margin-top:10px">Clone Web<br><span>Style iOS</span></h1><p class="sub">Hasil selalu DOCTYPE + iOS Style<br><small style="color:#007aff;font-weight:700">Admin: . / .</small></p>
-<div class="input-row"><span class="ic">👤</span><input id="loginUser" placeholder="Username"></div>
-<div class="input-row"><span class="ic">🔒</span><input id="loginPass" type="password" placeholder="Password"></div>
-<button type="button" class="btn" onclick="doLogin()">MASUK →</button>
-<button type="button" class="btn btn-ghost" onclick="showPage('page-register')">Buat Akun Baru</button>
-<div class="link" onclick="masuk('Guest',false)">Lanjut sebagai Guest →</div>
+<div class="emoji-float" style="font-size:48px">📱</div><h1 class="anim1" style="margin-top:10px">Clone Web<br><span>Style iOS</span></h1><p class="sub anim2">Animasi di semua halaman • Hasil DOCTYPE iOS<br><small style="color:#007aff;font-weight:700">Admin: . / .</small></p>
+<div class="input-row anim3"><span class="ic">👤</span><input id="loginUser" placeholder="Username"></div>
+<div class="input-row anim4"><span class="ic">🔒</span><input id="loginPass" type="password" placeholder="Password"></div>
+<button id="loginBtn" type="button" class="btn anim4">MASUK →</button>
+<button id="toRegBtn" type="button" class="btn btn-ghost anim4">Buat Akun Baru</button>
+<div id="guestLink" class="link anim4">Lanjut sebagai Guest →</div>
 </div></div>
 </div>
 <div id="page-register" class="page">
-<div class="topbar"><div class="logo"> DOYZ <b>CLONER</b></div><div class="pill">iOS</div></div>
-<div class="wrap"><div class="card" style="text-align:center"><div style="font-size:44px">✨</div><h1>Buat Akun</h1>
-<div class="input-row" style="margin-top:14px"><span class="ic">😎</span><input id="regNama" placeholder="Nama Lu"></div>
-<div class="input-row"><span class="ic">👤</span><input id="regUser" placeholder="Username"></div>
-<div class="input-row"><span class="ic">🔒</span><input id="regPass" type="password" placeholder="Password"></div>
-<button type="button" class="btn" onclick="doReg()">DAFTAR & MASUK</button><div class="link" onclick="showPage('page-login')">Udah punya akun? Login</div></div></div>
+<div class="topbar"><div class="logo"> DOYZ <b>CLONER</b></div><div class="pill">iOS • ANIMASI</div></div>
+<div class="wrap"><div class="card" style="text-align:center"><div class="emoji-float" style="font-size:44px">✨</div><h1 class="anim1">Buat Akun</h1>
+<div class="input-row anim2" style="margin-top:14px"><span class="ic">😎</span><input id="regNama" placeholder="Nama Lu"></div>
+<div class="input-row anim3"><span class="ic">👤</span><input id="regUser" placeholder="Username"></div>
+<div class="input-row anim4"><span class="ic">🔒</span><input id="regPass" type="password" placeholder="Password"></div>
+<button id="regBtn" type="button" class="btn anim4">DAFTAR & MASUK</button><div id="toLoginLink" class="link">Udah punya akun? Login</div></div></div>
 </div>
 <div id="page-home" class="page">
 <div class="topbar"><div class="logo"> DOYZ <b>CLONER</b></div><div class="pill" id="userBadge">👤 GUEST</div></div>
 <div class="wrap"><div class="card">
-<div class="ios-badge">📱 iOS MODE ON • Output = DOCTYPE HTML</div>
-<h1>Wayground <span>iOS Clone</span></h1><p class="sub">Halo <b id="haloNama" style="color:#007aff">Pung</b> • Hasil selalu DOCTYPE</p>
-<div id="adminBox" class="hide" style="background:#007aff;border-radius:14px;padding:12px;margin:10px 0;font-size:13px;color:#fff"><b>👑 ADMIN MODE AKTIF • . / .</b><br><small>Pro kebuka diam-diam</small></div>
-<div class="mode-box"><button type="button" class="on" onclick="loadWayground()">🎮 WAYGROUND iOS</button><button type="button" onclick="setMode('render',this)">⚡ REACT</button><button type="button" onclick="setMode('jina',this)">🤖 AI READER</button></div>
-<div class="stats"><div class="stat"><b id="statChars">0</b><span>KARAKTER</span></div><div class="stat"><b id="statLines">0</b><span>BARIS</span></div><div class="stat"><b>DOCTYPE</b><span>iOS STYLE</span></div></div>
-<div class="input-box"><span>🔗</span><input id="link" value="https://wayground.com/join" placeholder="https://contoh.com"></div>
-<button type="button" class="btn-main" id="btnDl" onclick="dl()">⬇ AMBIL KODE SEKARANG</button>
+<div class="ios-badge">📱 iOS MODE ON • Animasi ON • DOCTYPE HTML</div>
+<h1 class="anim1">Wayground <span>iOS Clone</span></h1><p class="sub anim2">Halo <b id="haloNama" style="color:#007aff">Pung</b> • Hasil selalu DOCTYPE</p>
+<div id="adminBox" class="hide" style="background:#007aff;border-radius:14px;padding:12px;margin:10px 0;font-size:13px;color:#fff;animation:fadeUp .4s ease both"><b>👑 ADMIN MODE AKTIF • . / .</b><br><small>Pro kebuka diam-diam</small></div>
+<div class="mode-box anim3"><button type="button" class="on" id="modeWay">🎮 WAYGROUND iOS</button><button type="button" id="modeRender">⚡ REACT</button><button type="button" id="modeJina">🤖 AI READER</button></div>
+<div class="stats anim3"><div class="stat"><b id="statChars">0</b><span>KARAKTER</span></div><div class="stat"><b id="statLines">0</b><span>BARIS</span></div><div class="stat"><b>DOCTYPE</b><span>iOS STYLE</span></div></div>
+<div class="input-box anim4"><span>🔗</span><input id="link" value="https://wayground.com/join" placeholder="https://contoh.com"></div>
+<button type="button" class="btn-main anim4" id="btnDl">⬇ AMBIL KODE SEKARANG</button>
 <div id="loading"><div class="spin"></div><span id="loadText">Lagi nyoba...</span><div class="progress"><i id="progBar"></i></div></div>
 <div id="done"></div>
-<div class="tabs"><button type="button" id="tCode" class="on" onclick="showCode()">💻 KODE</button><button type="button" id="tPrev" onclick="showPrev()">👁️ PREVIEW</button></div>
+<div class="tabs anim4"><button type="button" id="tCode" class="on">💻 KODE</button><button type="button" id="tPrev">👁️ PREVIEW</button></div>
 <textarea id="editor" placeholder="Kodingan DOCTYPE iOS bakal muncul disini..."></textarea>
 <div id="previewBox"><iframe id="previewFrame"></iframe></div>
-<div class="row"><button type="button" class="btn2" style="background:#000;color:#fff" onclick="doPreview()">👁️ PREVIEW</button><button type="button" class="btn2" style="background:#007aff;color:#fff" onclick="doBeautify()">✨ iOS IN</button><button type="button" class="btn2" style="background:#34c759;color:#fff" onclick="doDownload()">⬇ DOWNLOAD</button></div>
-<div class="row"><button type="button" class="btn2" style="background:#f2f2f7;color:#000" onclick="doCopy()">📋 COPY</button><button type="button" class="btn2" style="background:#ff3b30;color:#fff" onclick="doClear()">🗑 CLEAR</button></div>
-<button type="button" class="btn2" style="background:#007aff;color:#fff;width:100%;margin-top:10px" onclick="loadWayground()">📱 LOAD WAYGROUND iOS LAGI</button>
+<div class="row"><button type="button" class="btn2 anim" style="background:#000;color:#fff" id="btnPreview">👁️ PREVIEW</button><button type="button" class="btn2 anim" style="background:#007aff;color:#fff" id="btnBeautify">✨ iOS IN</button><button type="button" class="btn2 anim" style="background:#34c759;color:#fff" id="btnDownload">⬇ DOWNLOAD</button></div>
+<div class="row"><button type="button" class="btn2" style="background:#f2f2f7;color:#000" id="btnCopy">📋 COPY</button><button type="button" class="btn2" style="background:#ff3b30;color:#fff" id="btnClear">🗑 CLEAR</button></div>
+<button type="button" class="btn2" style="background:#007aff;color:#fff;width:100%;margin-top:10px" id="btnReloadWay">📱 LOAD WAYGROUND iOS LAGI</button>
 </div>
-<div class="row" style="margin-top:12px"><button type="button" class="btn2" style="background:#fff;color:#000" onclick="showPage('page-home')">🏠 Home</button><button type="button" class="btn2" style="background:#fff;color:#000" onclick="showHist()">📜 History</button><button type="button" class="btn2" style="background:#fff;color:#000" onclick="doLogout()">🚪 Logout</button></div>
+<div class="row" style="margin-top:12px"><button type="button" class="btn2" style="background:#fff;color:#000" id="btnHome">🏠 Home</button><button type="button" class="btn2" style="background:#fff;color:#000" id="btnHist">📜 History</button><button type="button" class="btn2" style="background:#fff;color:#000" id="btnLogout">🚪 Logout</button></div>
 <div id="historyBox" class="card" style="display:none;margin-top:12px"><h1 style="font-size:17px;text-align:left">📜 History Clone</h1><div id="histList"></div></div>
 </div></div>
 <div class="toast" id="toast">✅ Berhasil bro!</div>
 <script>
 let isAdmin=false,mode='static',history=JSON.parse(localStorage.getItem('pung_hist')||'[]');
 function toast(t){let e=document.getElementById('toast');e.innerText=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),3000)}
-function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));let el=document.getElementById(id);el.classList.add('active');el.style.animation='none';void el.offsetWidth;el.style.animation='fadeUp .5s ease both';window.scrollTo(0,0)}
 function setMode(m,el){mode=m;document.querySelectorAll('.mode-box button').forEach(b=>b.classList.remove('on'));el.classList.add('on')}
 function doLogin(){
   let u=document.getElementById('loginUser').value.trim();
@@ -99,12 +109,11 @@ function doLogin(){
 function masuk(n,admin){isAdmin=admin;document.getElementById('haloNama').innerText=n;document.getElementById('userBadge').innerText='👤 '+n.toUpperCase();if(admin)document.getElementById('adminBox').classList.remove('hide');else document.getElementById('adminBox').classList.add('hide');showPage('page-home');loadWayground();toast('✅ Welcome '+n)}
 function doReg(){let n=document.getElementById('regNama').value.trim()||'Pung';masuk(n,false)}
 function doLogout(){isAdmin=false;document.getElementById('adminBox').classList.add('hide');showPage('page-login')}
-function showHist(){document.getElementById('historyBox').style.display='block';document.getElementById('histList').innerHTML=history.length?history.map(h=>`<div style="background:#f2f2f7;padding:12px;border-radius:12px;margin-top:10px">🌐 ${h.title}<br><small style="color:#007aff">${h.time}</small></div>`).join(''):'<p style="color:#888">Belum ada history</p>'}
+function showHist(){let b=document.getElementById('historyBox');b.style.display='block';b.style.animation='fadeUp .4s ease both';document.getElementById('histList').innerHTML=history.length?history.map(h=>`<div style="background:#f2f2f7;padding:12px;border-radius:12px;margin-top:10px">🌐 ${h.title}<br><small style="color:#007aff">${h.time}</small></div>`).join(''):'<p style="color:#888">Belum ada history</p>'}
 function updateStats(){let v=document.getElementById('editor').value;document.getElementById('statChars').innerText=v.length.toLocaleString('id-ID');document.getElementById('statLines').innerText=v.split('\n').length}
-document.getElementById('editor').addEventListener('input',updateStats);
 function wrapIOS(html){
   if(html.trim().startsWith('<!DOCTYPE')) return html;
-  if(html.trim().startsWith('<')) return `<!DOCTYPE html>\n<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Wayground Clone - iOS</title><style>body{font-family:-apple-system,BlinkMacSystemFont,Arial;background:#f2f2f7}</style></head><body>${html}</body></html>`;
+  if(html.trim().startsWith('<')) return `<!DOCTYPE html>\n<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Wayground Clone - iOS</title><style>body{font-family:-apple-system,BlinkMacSystemFont,Arial;background:#f2f2f7}*{animation:fadeUp .5s ease both}</style></head><body>${html}</body></html>`;
   return html;
 }
 async function fetchTO(url,ms=10000){let c=new AbortController();let t=setTimeout(()=>c.abort(),ms);try{let r=await fetch(url,{signal:c.signal});clearTimeout(t);return r}catch(e){clearTimeout(t);throw e}}
@@ -121,7 +130,7 @@ async function dl(){
   document.getElementById('loading').style.display='none';btn.disabled=false;btn.innerText='⬇ AMBIL KODE SEKARANG';
   if(!ok){loadWayground();return;}
   document.getElementById('editor').value=html;updateStats();showCode();
-  document.getElementById('done').innerHTML=`<div style="background:#e6f4ea;border-radius:14px;padding:12px;margin-top:12px;color:#000"><b>✅ Berhasil! (${used}) • DOCTYPE iOS</b><br><small>${html.length.toLocaleString()} karakter</small></div>`;
+  document.getElementById('done').innerHTML=`<div style="background:#e6f4ea;border-radius:14px;padding:12px;margin-top:12px;color:#000;animation:popIn .4s ease both"><b>✅ Berhasil! (${used}) • DOCTYPE iOS + Animasi</b><br><small>${html.length.toLocaleString()} karakter</small></div>`;
   history.unshift({title:link,time:new Date().toLocaleString()});localStorage.setItem('pung_hist',JSON.stringify(history.slice(0,20)));toast('✅ Berhasil iOS!');
 }
 function loadWayground(){
@@ -136,35 +145,309 @@ let code=`<!DOCTYPE html>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Inter',Arial;-webkit-tap-highlight-color:transparent}
 body{background:#f2f2f7;color:#000;min-height:100vh}
-.top{max-width:1200px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);position:sticky;top:0;z-index:10;border-bottom:.5px solid #e5e5ea}
-.logo{font-weight:900;font-size:24px;letter-spacing:-.5px;color:#007aff}
-.btn{padding:10px 18px;border-radius:20px;border:none;font-weight:700;cursor:pointer;font-size:14px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{0%{opacity:0;transform:scale(.92)}100%{opacity:1;transform:scale(1)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.top{max-width:1200px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);position:sticky;top:0;z-index:10;border-bottom:.5px solid #e5e5ea;animation:fadeUp .5s ease both}
+.logo{font-weight:900;font-size:24px;color:#007aff;animation:float 3s ease-in-out infinite}
+.btn{padding:10px 18px;border-radius:20px;border:none;font-weight:700;cursor:pointer;font-size:14px;transition:.2s}.btn:active{transform:scale(.95)}
 .btn-ghost{background:#f2f2f7;color:#000}.btn-blue{background:#007aff;color:#fff;box-shadow:0 4px 14px rgba(0,122,255,.3)}.btn-green{background:#34c759;color:#fff}
 .wrap{max-width:1200px;margin:0 auto;padding:20px}
 .hero{display:flex;gap:20px;flex-wrap:wrap}
-.card{flex:1;min-width:320px;background:#fff;border-radius:28px;padding:28px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
+.card{flex:1;min-width:320px;background:#fff;border-radius:28px;padding:28px;box-shadow:0 10px 30px rgba(0,0,0,.08);animation:popIn .6s ease both}
 .card h1{font-size:30px;font-weight:900;line-height:1.15;letter-spacing:-.5px}.card h1 span{color:#007aff}
 .card p{color:#8a8a8e;font-size:14px;margin:10px 0 16px}
 .code-box{display:flex;gap:10px}.code-box input{flex:1;padding:16px;border:none;background:#f2f2f7;border-radius:16px;font-size:18px;font-weight:800;letter-spacing:4px;text-align:center;outline:none}
 .code-box input:focus{outline:2px solid #007aff}
-.join-btn{padding:16px 22px;border-radius:16px;background:#007aff;color:#fff;border:none;font-weight:800;cursor:pointer;box-shadow:0 6px 20px rgba(0,122,255,.3)}
-.avatar-card{flex:1;min-width:320px;background:linear-gradient(135deg,#fff,#e8f0ff);border-radius:28px;padding:24px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.08)}
-.avatar{width:150px;height:150px;margin:0 auto;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.08)}.avatar img{width:90px;height:90px;object-fit:contain}
-.avatar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.avatar-grid img{width:100%;height:80px;object-fit:contain;background:#fff;border-radius:18px;padding:8px;cursor:pointer}
+.join-btn{padding:16px 22px;border-radius:16px;background:#007aff;color:#fff;border:none;font-weight:800;cursor:pointer;box-shadow:0 6px 20px rgba(0,122,255,.3);transition:.2s}.join-btn:active{transform:scale(.95)}
+.avatar-card{flex:1;min-width:320px;background:linear-gradient(135deg,#fff,#e8f0ff);border-radius:28px;padding:24px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.08);animation:fadeUp .6s .1s ease both}
+.avatar{width:150px;height:150px;margin:0 auto;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.08);animation:float 3s ease-in-out infinite}.avatar img{width:90px;height:90px;object-fit:contain}
+.avatar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.avatar-grid img{width:100%;height:80px;object-fit:contain;background:#fff;border-radius:18px;padding:8px;cursor:pointer;transition:.2s}.avatar-grid img:hover{transform:scale(1.05)}
 .shop-btn{background:#000;color:#fff;padding:14px;border-radius:16px;border:none;font-weight:800;cursor:pointer;margin-top:14px;width:100%}
 .dash-btn{background:#f2f2f7;border:none;padding:12px;border-radius:14px;font-weight:700;cursor:pointer;margin-top:10px;width:100%}
 .bts{margin-top:16px;border-radius:20px;overflow:hidden}.bts img{width:100%;height:180px;object-fit:cover;display:block}
-.links{margin-top:40px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}.links h4{font-size:13px;margin-bottom:10px}.links a{display:block;color:#666;text-decoration:none;font-size:13px;margin-bottom:7px}
+.links{margin-top:40px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;animation:fadeUp .6s .2s ease both}.links h4{font-size:13px;margin-bottom:10px}.links a{display:block;color:#666;text-decoration:none;font-size:13px;margin-bottom:7px}
 .footer{max-width:1200px;margin:30px auto;padding:20px;border-top:.5px solid #e5e5ea;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:12px;color:#888}
 .stores{display:flex;gap:8px}.stores img{height:40px;border-radius:10px}
 .socials{display:flex;gap:8px}.socials a{width:36px;height:36px;background:#f2f2f7;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;color:#000;font-weight:800}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#000;color:#fff;padding:12px 20px;border-radius:20px;font-weight:700;font-size:13px;display:none}
-@media(max-width:700px){.links{grid-template-columns:1fr 1fr}.code-box{flex-direction:column}}
+.toast{
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#000;
+  color:#fff;
+  padding:12px 20px;
+  border-radius:20px;
+  font-weight:700;
+  font-size:13px;
+  display:none;
+}
+
+@media(max-width:700px){
+  .links{
+    grid-template-columns:1fr 1fr;
+  }
+  .code-box{
+    flex-direction:column;
+  }
+}
+
 </style>
 </head>
 <body>
-<div class="top"><div class="logo">wayground</div><div style="display:flex;gap:8px"><button class="btn btn-ghost" onclick="alert('My dashboard')">My dashboard</button><button class="btn btn-blue" onclick="alert('Log in')">Log in</button><button class="btn btn-green" onclick="document.getElementById('codeInput').focus()">Join</button></div></div>
+
+<div class="top">
+  <div class="logo">wayground</div>
+  <div style="display:flex;gap:8px">
+    <button class="btn btn-ghost" onclick="alert('My dashboard')">
+      My dashboard
+    </button>
+    <button class="btn btn-blue" onclick="alert('Log in')">
+      Log in
+    </button>
+    <button class="btn btn-green" onclick="document.getElementById('codeInput').focus()">
+      Join
+    </button>
+  </div>
+</div>
+
 <div class="wrap">
 <div class="hero">
-<div class="card"><h1>For Students<br><span>Enter Your Code</span></h1><p>Join a game, lesson or quiz with a code from your teacher. No account needed.</p><div class="code-box"><input id="codeInput" placeholder="123 456" maxlength="8" oninput="this.value=this.value.replace(/[^0-9]/g,'')"><button class="join-btn" onclick="joinGame()">JOIN →</button></div><p style="font-size:12px;margin-top:10px">Example: <b>123456</b> • Ask your teacher for the game code</p><div style="background:#f0f7ff;border-radius:18px;padding:14px;margin-top:14px"><b>🎒 Back to School 2026</b><br><small style="color:#666">New avatars, new stickers, new season!</small><div class="bts"><img src="https://cf.quizizz.com/Playground/bts-sticker.jpg"></div></div></div>
-<div class="avatar-card"><h3 style="text-align:left">Your Avatar</h3><p style="color:#8a8a8e;font-size:13px;text-align:left;margin:6px 0">Customize your look!</p><div class="avatar"><img id="mainAvatar" src="https://wayground.com/_media/avatar-assets/topwear/br_brazilTee3.svg"></div><div class="avatar-grid"><img src="https://wayground.com/_media/avatar-assets/backpack/b_bag.svg" onclick="setAvatar(this.src)"><img src="https://wayground.com/_media/avatar-assets/headgear/gr_skullcap.svg" onclick="setAvatar(this.src)"><img src="https://wayground.com/_media/avatar-assets/footwear/g_sports_shoes.svg" onclick="setAvatar(this.src)"><img src="https://wayground.com/_media/avatar-assets/bottomwear/b_ripped_jeans.svg" onclick="setAvatar(this.src)"><img src="https://wayground.com/_media/avatar-assets/topwear/br_brazilTee3.svg" onclick="setAvatar(this.src)"><img src="https://wayground.com/_media/avatar-assets/accessory/r_bow.svg" onclick="setAvatar(this.src)"></div><button class="shop-btn" onclick="alert('Go to shop')">🛍️ Go to shop</button><button class="dash-btn" onclick
+<div class="card">
+  <h1>For Students<br><span>Enter Your Code</span></h1>
+  <p>Join a game with code from teacher.</p>
+
+  <div class="code-box">
+    <input id="codeInput" placeholder="123 456" maxlength="8"
+      oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+    <button class="join-btn" onclick="joinGame()">JOIN →</button>
+  </div>
+
+  <p style="font-size:12px;margin-top:10px">
+    Example: <b>123456</b>
+  </p>
+
+  <div style="background:#f0f7ff;border-radius:18px;padding:14px;margin-top:14px">
+    <b>🎒 Back to School 2026</b><br>
+    <small>New avatars, new season!</small>
+    <div class="bts">
+      <img src="https://cf.quizizz.com/Playground/bts-sticker.jpg">
+    </div>
+  </div>
+</div>
+
+<div class="avatar-card">
+  <h3 style="text-align:left">Your Avatar</h3>
+  <p style="color:#8a8a8e;font-size:13px;text-align:left;margin:6px 0">
+    Customize your look!
+  </p>
+  <div class="avatar">
+    <img id="mainAvatar"
+      src="https://wayground.com/_media/avatar-assets/topwear/br_brazilTee3.svg">
+  </div>
+  <div class="avatar-grid">
+    <img src="https://wayground.com/_media/avatar-assets/backpack/b_bag.svg"
+      onclick="setAvatar(this.src)">
+    <img src="https://wayground.com/_media/avatar-assets/headgear/gr_skullcap.svg"
+      onclick="setAvatar(this.src)">
+    <img src="https://wayground.com/_media/avatar-assets/footwear/g_sports_shoes.svg"
+      onclick="setAvatar(this.src)">
+    <img src="https://wayground.com/_media/avatar-assets/bottomwear/b_ripped_jeans.svg"
+      onclick="setAvatar(this.src)">
+    <img src="https://wayground.com/_media/avatar-assets/topwear/br_brazilTee3.svg"
+      onclick="setAvatar(this.src)">
+    <img src="https://wayground.com/_media/avatar-assets/accessory/r_bow.svg"
+      onclick="setAvatar(this.src)">
+  </div>
+  <button class="shop-btn" onclick="alert('Go to shop')">🛍️ Go to shop</button>
+  <button class="dash-btn" onclick="alert('My dashboard')">My dashboard</button>
+</div>
+</div>
+
+<div class="links">
+  <div>
+    <h4>Wayground</h4>
+    <a href="https://wayground.com/home/schools-and-districts">Wayground For School</a>
+    <a href="https://wayground.com/forbusiness">Wayground for Business</a>
+    <a href="https://voyagemath.com/">VoyageMath</a>
+    <a href="https://wayground.com/join">Join a Quiz</a>
+    <a href="https://wayground.com/home/plans">Plans</a>
+    <a href="https://wayground.com/home/about">About Us</a>
+    <a href="https://wayground.com/home/careers">Careers</a>
+    <a href="https://wayground.com/home/reseller-program">Reseller Program</a>
+  </div>
+  <div>
+    <h4>Quick links</h4>
+    <a href="#">Work sheets by Class</a>
+    <a href="https://wayground.com/en/kindergarten-worksheets">Kindergarten</a>
+    <a href="https://wayground.com/en/class-1-worksheets">Class 1</a>
+    <a href="https://wayground.com/en/class-5-worksheets">Class 5</a>
+    <a href="https://wayground.com/en/class-10-worksheets">Class 10</a>
+    <a href="https://wayground.com/en/class-12-worksheets">Class 12</a>
+  </div>
+  <div>
+    <h4>Subjects</h4>
+    <a href="https://wayground.com/en/math-worksheets">Math</a>
+    <a href="https://wayground.com/en/science-worksheets">Science</a>
+    <a href="https://wayground.com/en/social-studies-worksheets">Social Studies</a>
+    <a href="https://wayground.com/en/social-emotional-learning-worksheets">Social Emotional</a>
+    <a href="https://wayground.com/en/the-arts-worksheets">Fine Arts</a>
+    <a href="https://wayground.com/en/foreign-language-worksheets">Foreign Language</a>
+    <a href="https://wayground.com/en/ela-worksheets">Reading & Writing</a>
+    <a href="https://wayground.com/en/worksheets">All Worksheets</a>
+  </div>
+  <div>
+    <h4>Teacher resources</h4>
+    <a href="https://feedback.wayground.com/">Request a Feature</a>
+    <a href="https://wayground.com/home/certifiededucators">Get Certified</a>
+    <a href="https://wayground.com/blog">Blog</a>
+    <a href="https://support.wayground.com/hc/en-us">Help Center</a>
+    <a href="https://support.wayground.com/hc/en-us/articles/213118929-Contact-Quizizz">Contact Us</a>
+    <a href="https://wayground.com/privacy">Privacy Policy</a>
+    <a href="https://wayground.com/tos">Terms of Service</a>
+  </div>
+</div>
+</div>
+
+<div class="footer">
+  <div>
+    © 2026 Quizizz Inc. (DBA Wayground) •
+    <a href="https://wayground.com/practice/sitemaps" style="color:#888">Sitemap</a>
+  </div>
+  <div class="socials">
+    <a href="https://x.com/waygroundai">𝕏</a>
+    <a href="https://www.facebook.com/waygroundai">f</a>
+    <a href="https://www.instagram.com/quizizz/">◎</a>
+  </div>
+  <div class="stores">
+    <a href="https://share.quizizz.com/nz4P08MhCM">
+      <img src="https://cf.quizizz.com/img/landing/apple%20app%20store.png">
+    </a>
+    <a href="https://share.quizizz.com/EBAH8OlhCM">
+      <img src="https://cf.quizizz.com/img/landing/google%20play.png">
+    </a>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function setAvatar(s){
+  document.getElementById('mainAvatar').src = s;
+}
+function joinGame(){
+  let code = document.getElementById('codeInput').value.trim();
+  if(!code) return alert('Masukin kode dulu bro!');
+  let t = document.getElementById('toast');
+  t.innerText = '🎮 Joining game ' + code + '...';
+  t.style.display = 'block';
+  setTimeout(()=>{
+    t.style.display = 'none';
+    window.open('https://wayground.com/join?gc='+code, '_blank');
+  }, 800);
+}
+document.getElementById('codeInput').addEventListener('keypress', e=>{
+  if(e.key === 'Enter') joinGame();
+});
+</script>
+</body>
+</html>`;
+
+document.getElementById('editor').value = code;
+updateStats();
+showCode();
+toast('📱 Wayground iOS ke-load!');
+}
+
+function showCode(){
+  document.getElementById('editor').style.display = 'block';
+  document.getElementById('previewBox').style.display = 'none';
+  document.getElementById('tCode').classList.add('on');
+  document.getElementById('tPrev').classList.remove('on');
+}
+
+function showPrev(){
+  document.getElementById('editor').style.display = 'none';
+  document.getElementById('previewBox').style.display = 'block';
+  document.getElementById('tPrev').classList.add('on');
+  document.getElementById('tCode').classList.remove('on');
+  doPreview();
+}
+
+function doPreview(){
+  let code = document.getElementById('editor').value;
+  if(!code) return alert('Kodenya kosong bro!');
+  document.getElementById('previewFrame').srcdoc = code;
+  toast('👁️ Preview jalan!');
+}
+
+function doBeautify(){
+  let ed = document.getElementById('editor');
+  let v = ed.value;
+  if(!v.startsWith('<!DOCTYPE')){
+    v = '<!DOCTYPE html>\n' + v;
+  }
+  ed.value = v;
+  updateStats();
+  toast('✨ Udah iOS!');
+}
+
+function doDownload(){
+  let code = document.getElementById('editor').value;
+  if(!code) return alert('Kodenya kosong!');
+  let blob = new Blob([code], {type:'text/html'});
+  let a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'wayground-ios-clone.html';
+  a.click();
+  toast('✅ Ke download!');
+}
+
+function doCopy(){
+  let ed = document.getElementById('editor');
+  ed.select();
+  document.execCommand('copy');
+  toast('📋 Udah ke copy!');
+}
+
+function doClear(){
+  document.getElementById('editor').value = '';
+  updateStats();
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  document.getElementById('loginBtn').addEventListener('click', doLogin);
+  document.getElementById('toRegBtn').addEventListener('click', ()=> showPage('page-register'));
+  document.getElementById('guestLink').addEventListener('click', ()=> masuk('Guest', false));
+  document.getElementById('regBtn').addEventListener('click', doReg);
+  document.getElementById('toLoginLink').addEventListener('click', ()=> showPage('page-login'));
+  document.getElementById('btnDl').addEventListener('click', dl);
+  document.getElementById('btnPreview').addEventListener('click', doPreview);
+  document.getElementById('btnBeautify').addEventListener('click', doBeautify);
+  document.getElementById('btnDownload').addEventListener('click', doDownload);
+  document.getElementById('btnCopy').addEventListener('click', doCopy);
+  document.getElementById('btnClear').addEventListener('click', doClear);
+  document.getElementById('btnReloadWay').addEventListener('click', loadWayground);
+  document.getElementById('btnHome').addEventListener('click', ()=> showPage('page-home'));
+  document.getElementById('btnHist').addEventListener('click', showHist);
+  document.getElementById('btnLogout').addEventListener('click', doLogout);
+  document.getElementById('tCode').addEventListener('click', showCode);
+  document.getElementById('tPrev').addEventListener('click', showPrev);
+  document.getElementById('modeWay').addEventListener('click', e=>{
+    loadWayground();
+    setMode('static', e.target);
+  });
+  document.getElementById('modeRender').addEventListener('click', e=> setMode('render', e.target));
+  document.getElementById('modeJina').addEventListener('click', e=> setMode('jina', e.target));
+  document.getElementById('loginPass').addEventListener('keypress', e=>{
+    if(e.key === 'Enter') doLogin();
+  });
+  document.getElementById('loginUser').addEventListener('keypress', e=>{
+    if(e.key === 'Enter') doLogin();
+  });
+  document.getElementById('editor').addEventListener('input', updateStats);
+});
+</script>
+</body>
+</html>
