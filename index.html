@@ -2,164 +2,143 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>DOYZ CLONER</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOYZ CLONER </title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Arial}
-:root{--ios:#007AFF;--green:#00ff88}
-body{background:#f2f2f7;color:#000;min-height:100vh;overflow-x:hidden}
-.page{display:none}.page.active{display:block;animation:pageIn .45s cubic-bezier(.22,1,.36,1) both}
-@keyframes pageIn{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes popIn{0%{opacity:0;transform:scale(.9) translateY(10px)}70%{transform:scale(1.02)}100%{opacity:1;transform:scale(1)}}
-@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes blinkDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.8)}}
-@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',-apple-system,Arial}
+body{background:#0a0a0c;color:#fff;min-height:100vh}
+.page{display:none}.page.active{display:block;animation:fade .35s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-
-/* iOS Status Bar */
-.ios-bar{max-width:430px;margin:0 auto;padding:14px 20px 6px;display:flex;justify-content:space-between;font-size:13px;font-weight:700}
-.ios-bar span:last-child{letter-spacing:1px}
-
-/* Top */
-.top{max-width:430px;margin:0 auto;padding:8px 20px 12px;display:flex;justify-content:space-between;align-items:center;animation:slideUp .5s ease both}
-.logo{font-weight:900;font-size:21px;letter-spacing:-.5px}.logo span{color:#00c853}.logo i{background:#000;color:#00ff88;padding:6px 8px;border-radius:12px;margin-right:6px;display:inline-block;animation:floatY 3s ease-in-out infinite}
-.pill{background:#000;color:#fff;font-size:11px;font-weight:800;padding:7px 13px;border-radius:20px}
-.wrap{max-width:430px;margin:0 auto;padding:0 16px 30px}
-.card{background:#fff;border-radius:28px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.08);animation:popIn .5s cubic-bezier(.22,1,.36,1) both}
-.card2{background:#fff;border-radius:28px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,.08);animation:popIn .6s cubic-bezier(.22,1,.36,1) both}
-.avatar{width:84px;height:84px;margin:0 auto 14px;border-radius:26px;background:linear-gradient(135deg,#00ff88,#00ccff);display:flex;align-items:center;justify-content:center;font-size:36px;box-shadow:0 12px 25px rgba(0,200,100,.3);animation:floatY 3.5s ease-in-out infinite}
-h1{font-size:25px;text-align:center;line-height:1.2;font-weight:900;letter-spacing:-.5px}h1 .gr{color:#00c853}
-.sub{color:#8a8a8e;font-size:13px;text-align:center;margin:10px 0 16px}
-.live-box{display:flex;align-items:center;justify-content:center;gap:8px;background:#f2f2f7;border-radius:14px;padding:10px;margin:10px 0;font-size:12px}
-.live-dot{width:9px;height:9px;background:#34c759;border-radius:50%;animation:blinkDot 1s infinite}
-.stats{display:flex;gap:8px;margin:14px 0}.stat{flex:1;background:#f2f2f7;border-radius:16px;padding:10px;text-align:center;transition:.3s}.stat:active{transform:scale(.95)}.stat b{display:block;font-size:14px}.stat span{font-size:10px;color:#8a8a8e}
-.input-row{position:relative;margin-bottom:12px;animation:slideUp .6s both}.input-row .ic{position:absolute;left:14px;top:50%;transform:translateY(-50%);z-index:2}.input-row input{width:100%;padding:16px 14px 16px 44px;border-radius:16px;background:#f2f2f7;border:none;color:#000;outline:none;font-size:15px;transition:.25s}.input-row input:focus{background:#fff;box-shadow:0 0 0 2px #007AFF}
-.btn{width:100%;padding:17px;border:none;border-radius:16px;background:#000;color:#fff;font-weight:800;cursor:pointer;font-size:16px;transition:.2s;position:relative;overflow:hidden}
-.btn:active{transform:scale(.96)}
-.btn-green{background:#00c853;color:#fff}
-.btn-ghost{background:#f2f2f7;color:#000;margin-top:10px}
-.btn2{flex:1;padding:13px;border:none;border-radius:14px;font-weight:800;cursor:pointer;transition:.2s}.btn2:active{transform:scale(.95)}
-.row{display:flex;gap:8px;margin-top:10px}
-.tabs{display:flex;gap:6px;background:#f2f2f7;padding:5px;border-radius:16px;margin:14px 0}.tabs button{flex:1;padding:11px 4px;border:none;border-radius:12px;background:transparent;color:#8a8a8e;font-weight:700;font-size:12px;cursor:pointer;transition:.25s}.tabs button.on{background:#fff;color:#000;box-shadow:0 2px 10px rgba(0,0,0,.1)}
-textarea{width:100%;height:380px;background:#000;color:#00ff88;border-radius:20px;padding:14px;font-family:monospace;font-size:12.5px;line-height:1.6;outline:none;resize:vertical;border:none}
-#previewBox{width:100%;height:380px;background:#fff;border-radius:20px;overflow:hidden;display:none;box-shadow:inset 0 0 0 1px #eee}
+.topbar{max-width:520px;margin:0 auto;padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:900;font-size:19px}.logo b{color:#a78bfa}
+.pill{background:#1a1a1e;border:1px solid #2a2a30;padding:6px 11px;border-radius:20px;font-size:11px;font-weight:700;color:#a78bfa}
+.wrap{max-width:520px;margin:0 auto;padding:0 14px 30px}
+.card{background:#131316;border:1px solid #232329;border-radius:20px;padding:18px}
+h1{font-size:23px;font-weight:900}h1 span{color:#a78bfa}
+.sub{color:#8b8b93;font-size:13px;margin:8px 0 14px}
+.input-box{display:flex;gap:8px;background:#000;border:1px solid #2a2a30;border-radius:14px;padding:6px 6px 6px 14px;align-items:center}
+.input-box input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:14px;min-width:0}
+.btn-main{width:100%;padding:16px;border:none;border-radius:14px;background:linear-gradient(90deg,#7c3aed,#a78bfa);color:#fff;font-weight:900;font-size:15px;cursor:pointer;margin-top:12px;box-shadow:0 8px 25px rgba(124,58,237,.35);z-index:99;position:relative}
+.btn-main:active{transform:scale(.97)}
+.btn-main:disabled{opacity:.6}
+.input-row{position:relative;margin-bottom:12px}.input-row input{width:100%;padding:15px 14px 15px 42px;border-radius:14px;background:#000;border:1px solid #2a2a30;color:#fff;outline:none;font-size:14px}
+.input-row .ic{position:absolute;left:13px;top:50%;transform:translateY(-50%)}
+.btn{width:100%;padding:15px;border:none;border-radius:14px;background:linear-gradient(90deg,#7c3aed,#a78bfa);color:#fff;font-weight:800;cursor:pointer;z-index:99}
+.btn-ghost{background:#1e1e22;color:#fff;margin-top:10px}
+.tabs{display:flex;gap:6px;background:#000;padding:5px;border-radius:14px;margin:14px 0}.tabs button{flex:1;padding:11px;border:none;border-radius:10px;background:transparent;color:#888;font-weight:700;cursor:pointer}.tabs button.on{background:#fff;color:#000}
+textarea{width:100%;height:400px;background:#000;color:#c4b5fd;border:1px solid #232329;border-radius:14px;padding:14px;font-family:monospace;font-size:12px;line-height:1.6;outline:none;resize:vertical}
+#previewBox{width:100%;height:400px;background:#fff;border-radius:14px;overflow:hidden;display:none}
 #previewBox iframe{width:100%;height:100%;border:none}
-.link{color:#007AFF;text-align:center;font-size:13px;margin-top:14px;cursor:pointer;padding:12px;font-weight:600}
-.link:active{opacity:.5}
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#000;color:#fff;padding:12px 20px;border-radius:20px;font-weight:700;font-size:13px;z-index:9999;transition:.4s cubic-bezier(.22,1,.36,1);box-shadow:0 10px 30px rgba(0,0,0,.3)}
-.toast.show{transform:translateX(-50%) translateY(0)}
-.spin{width:34px;height:34px;border:3px solid #e5e5ea;border-top-color:#00c853;border-radius:50%;margin:0 auto 10px;animation:spin .8s linear infinite}
-.progress{height:5px;background:#e5e5ea;border-radius:10px;overflow:hidden;margin:10px 0}.progress i{display:block;height:100%;background:linear-gradient(90deg,#00ff88,#00ccff);width:0;transition:.5s;background-size:200% 100%;animation:shimmer 1.5s infinite}
-#loading{display:none;text-align:center;padding:16px;color:#00c853;font-weight:700}
-.nav{max-width:430px;margin:12px auto;display:flex;gap:8px;padding:0 16px}.nav button{flex:1;padding:12px;border:none;border-radius:14px;background:#fff;color:#000;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,.06);transition:.2s}.nav button:active{transform:scale(.95)}
-.home-ind{width:120px;height:5px;background:#000;border-radius:10px;margin:14px auto 0;opacity:.2}
+.row{display:flex;gap:8px;margin-top:10px}.btn2{flex:1;padding:13px;border:none;border-radius:12px;font-weight:800;cursor:pointer;z-index:99}.btn2:active{transform:scale(.95)}
+.stats{display:flex;gap:8px;margin:12px 0}.stat{flex:1;background:#000;border:1px solid #232329;border-radius:14px;padding:10px;text-align:center}.stat b{color:#a78bfa;display:block}.stat span{font-size:10px;color:#888}
+.link{color:#a78bfa;text-align:center;font-size:13px;margin-top:12px;cursor:pointer;padding:10px;z-index:99;position:relative}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:#fff;color:#000;padding:12px 20px;border-radius:20px;font-weight:800;font-size:13px;z-index:9999;transition:.35s}.toast.show{transform:translateX(-50%) translateY(0)}
+.spin{width:28px;height:28px;border:3px solid #222;border-top-color:#a78bfa;border-radius:50%;margin:0 auto 8px;animation:spin .8s linear infinite}
+#loading{display:none;text-align:center;padding:14px;color:#a78bfa;font-weight:700;font-size:13px}
+.progress{height:4px;background:#222;border-radius:10px;overflow:hidden;margin:8px 0}.progress i{display:block;height:100%;background:#a78bfa;width:0;transition:.4s}
 .hide{display:none!important}
 </style>
 </head>
 <body>
-
-<!-- PAGE LOGIN - CUMA USN + PW, GA ADA TULISAN ADMIN -->
 <div id="page-login" class="page active">
-<div class="ios-bar"><span>09:41</span><span>📶 📡 🔋</span></div>
-<div class="top"><div class="logo"><i>⚡</i>DOYZ<span>DL</span></div><div class="pill">iOS STYLE</div></div>
-<div class="wrap"><div class="card">
-<div class="avatar">🔥</div>
-<h1>Welcome To<br><span class="gr">DOYZ DOWNLOADER</span></h1>
-<p class="sub">pray it grows let's try ✨</p>
-<div class="live-box"><span class="live-dot"></span><span><b id="liveCount1">127</b> online</span><span>• Total: <b id="totalVisit1">1,204</b></span></div>
-<div class="stats"><div class="stat"><b>1080p</b><span>HD JERNIH</span></div><div class="stat"><b>🔊 POP</b><span>SUARA KLIK</span></div><div class="stat"><b>📥 FILE</b><span>KE GALERI</span></div></div>
+<div class="topbar"><div class="logo">🟣 DOYZ <b>CLONER</b></div><div class="pill">v29.63 FIX</div></div>
+<div class="wrap"><div class="card" style="text-align:center">
+<div style="font-size:48px">🛠️</div><h1 style="margin-top:10px">Clone Web<br><span>Jadi Base Lu</span></h1><p class="sub">Fix proxy gagal di CodePen • Sekarang tembus</p>
 <div class="input-row"><span class="ic">👤</span><input id="loginUser" placeholder="Username"></div>
 <div class="input-row"><span class="ic">🔒</span><input id="loginPass" type="password" placeholder="Password"></div>
-<button class="btn" onclick="doLogin()">🚀 LOGIN & MASUK</button>
-<button class="btn btn-ghost" onclick="showPage('page-register')">Daftar Gratis</button>
-<div class="link" onclick="masuk('Guest',false)">Lanjut sebagai <b>Guest →</b></div>
-</div><div class="home-ind"></div></div>
+<button type="button" class="btn" onclick="doLogin()">MASUK →</button>
+<button type="button" class="btn btn-ghost" onclick="showPage('page-register')">Buat Akun Baru</button>
+<div class="link" onclick="masuk('Guest',false)">Lanjut sebagai Guest →</div>
+</div></div>
 </div>
-
-<!-- PAGE REGISTER -->
 <div id="page-register" class="page">
-<div class="ios-bar"><span>09:41</span><span>📶 📡 🔋</span></div>
-<div class="top"><div class="logo"><i>⚡</i>DOYZ<span>DL</span></div><div class="pill">DAFTAR</div></div>
-<div class="wrap"><div class="card" style="text-align:center">
-<div class="avatar">✨</div><h1>Daftar Akun<br><span class="gr">DOYZ DOWNLOADER</span></h1>
+<div class="topbar"><div class="logo">🟣 DOYZ <b>CLONER</b></div><div class="pill">DAFTAR</div></div>
+<div class="wrap"><div class="card" style="text-align:center"><div style="font-size:44px">✨</div><h1>Buat Akun</h1>
 <div class="input-row" style="margin-top:14px"><span class="ic">😎</span><input id="regNama" placeholder="Nama Lu"></div>
 <div class="input-row"><span class="ic">👤</span><input id="regUser" placeholder="Username"></div>
 <div class="input-row"><span class="ic">🔒</span><input id="regPass" type="password" placeholder="Password"></div>
-<button class="btn btn-green" onclick="doReg()">✅ DAFTAR & MASUK</button>
-<div class="link" onclick="showPage('page-login')">Udah punya akun? Login</div>
-</div><div class="home-ind"></div></div>
+<button type="button" class="btn" onclick="doReg()">DAFTAR & MASUK</button><div class="link" onclick="showPage('page-login')">Udah punya akun? Login</div></div></div>
 </div>
-
-<!-- PAGE HOME / CLONER -->
 <div id="page-home" class="page">
-<div class="ios-bar"><span>09:41</span><span>📶 📡 🔋</span></div>
-<div class="top"><div class="logo"><i>⚡</i>DOYZ<span>CLONER</span></div><div class="pill" id="userBadge">👤 GUEST</div></div>
-<div class="wrap">
-<div class="card">
-<h1>DOYZ Cloner<br><span class="gr">Jadi Base Lu</span></h1>
-<p class="sub">Halo <b id="haloNama" style="color:#00c853">Pung</b> • Tempel link -> ambil -> edit</p>
-<div class="live-box"><span class="live-dot"></span><span><b id="liveCount2">127</b> online</span><span>• 🔥 <b id="totalVisit2">1,204</b> total</span></div>
-
-<!-- INI FITUR ADMIN YANG DISEMBUNYIIN, CUMA MUNCUL KALO LOGIN ADMIN -->
-<div id="adminBox" class="hide" style="background:#000;color:#fff;border-radius:16px;padding:14px;margin:10px 0;animation:popIn .4s both">
-<b>👑 ADMIN PANEL</b><br><small style="color:#00ff88">Mode Admin Aktif • Fitur Cloner Pro Kebuka</small>
-<div class="row"><button class="btn2" style="background:#00ff88;color:#000" onclick="toast('👑 Admin: Semua Fitur Kebuka')">PRO MODE</button><button class="btn2" style="background:#fff;color:#000" onclick="toast('📊 Total Clone: '+(history.length)+' web')">STAT</button></div>
-</div>
-
-<div class="input-row"><span class="ic">🔗</span><input id="link" placeholder="Tempel link web disini..."></div>
-<div class="input-row" style="display:none" id="dlInputRow"><span class="ic">🔗</span><input id="link2" placeholder="Tempel link TikTok disini..."></div>
-<div class="tabs"><button id="t1" class="on">✨ AUTO</button><button id="t2">🎬 VIDEO</button><button id="t3">📸 FOTO</button><button id="t4">🎵 MP3</button></div>
-<button class="btn btn-green" id="btnDl">⬇ AMBIL KODINGAN WEB</button>
-<div id="loading"><div class="spin"></div><span>Lagi ambil...</span><div class="progress"><i id="progBar"></i></div></div>
-<div id="done"></div><div id="done2"></div>
-<div class="tabs" style="margin-top:16px"><button id="tCode" class="on">💻 KODE</button><button id="tPrev">👁️ PREVIEW</button></div>
-<textarea id="editor" placeholder="Kodingan web bakal muncul disini bro..."></textarea>
+<div class="topbar"><div class="logo">🟣 DOYZ <b>CLONER</b></div><div class="pill" id="userBadge">👤 GUEST</div></div>
+<div class="wrap"><div class="card">
+<h1>Ambil Kode <span>Web Lain</span></h1><p class="sub">Halo <b id="haloNama" style="color:#a78bfa">Pung</b> • Tempel link, langsung ke ambil</p>
+<div id="adminBox" class="hide" style="background:linear-gradient(90deg,#7c3aed,#a78bfa);border-radius:14px;padding:12px;margin:10px 0;font-size:13px"><b>👑 ADMIN MODE AKTIF</b><br><small>Pro kebuka diam-diam</small></div>
+<div class="stats"><div class="stat"><b id="statChars">0</b><span>KARAKTER</span></div><div class="stat"><b id="statLines">0</b><span>BARIS</span></div><div class="stat"><b>HTML</b><span>CSS + JS</span></div></div>
+<div class="input-box"><span>🔗</span><input id="link" placeholder="https://doy-tools.github.io/downloader/"></div>
+<button type="button" class="btn-main" id="btnDl" onclick="dl()">⬇ AMBIL KODE SEKARANG</button>
+<div id="loading"><div class="spin"></div><span id="loadText">Lagi nyoba...</span><div class="progress"><i id="progBar"></i></div></div>
+<div id="done"></div>
+<div class="tabs"><button type="button" id="tCode" class="on" onclick="showCode()">💻 KODE</button><button type="button" id="tPrev" onclick="showPrev()">👁️ PREVIEW</button></div>
+<textarea id="editor" placeholder="Kodingan bakal muncul disini...&#10;&#10;Kalo masih gagal, klik tombol CARA MANUAL dibawah"></textarea>
 <div id="previewBox"><iframe id="previewFrame"></iframe></div>
-<div class="row"><button class="btn2" style="background:#000;color:#fff" onclick="doPreview()">👁️ PREVIEW</button><button class="btn2" style="background:#00c853;color:#fff" onclick="doBeautify()">✨ RAPIIN</button><button class="btn2" style="background:#007AFF;color:#fff" onclick="doDownload()">⬇ DOWNLOAD</button></div>
+<div class="row"><button type="button" class="btn2" style="background:#fff;color:#000" onclick="doPreview()">👁️ PREVIEW</button><button type="button" class="btn2" style="background:#a78bfa;color:#fff" onclick="doBeautify()">✨ RAPIIN</button><button type="button" class="btn2" style="background:#00c853;color:#fff" onclick="doDownload()">⬇ DOWNLOAD</button></div>
+<div class="row"><button type="button" class="btn2" style="background:#1e1e22;color:#fff" onclick="doCopy()">📋 COPY</button><button type="button" class="btn2" style="background:#ff3b30;color:#fff" onclick="doClear()">🗑 CLEAR</button></div>
+<button type="button" class="btn2" style="background:#FFC107;color:#000;width:100%;margin-top:10px" onclick="manualWay()">🛠️ CARA MANUAL - PASTI BERHASIL 100%</button>
+<p style="font-size:11px;color:#888;text-align:center;margin-top:8px;line-height:1.5">Kalo di CodePen masih gagal, jangan pake CodePen bro.<br>Deploy di Vercel / buka file ini langsung di Chrome, pasti tembus.</p>
 </div>
-<div class="nav"><button onclick="showPage('page-home')">🏠 Home</button><button onclick="showHist()">📜 History</button><button onclick="doLogout()">🚪 Logout</button></div>
-<div id="historyBox" class="card2" style="display:none;margin-top:14px"><h1 style="font-size:18px;text-align:left">📜 History</h1><div id="histList"></div></div>
-<div class="home-ind"></div>
-</div>
-</div>
-
+<div class="row" style="margin-top:12px"><button type="button" class="btn2" style="background:#131316;color:#fff;border:1px solid #232329" onclick="showPage('page-home')">🏠 Home</button><button type="button" class="btn2" style="background:#131316;color:#fff;border:1px solid #232329" onclick="showHist()">📜 History</button><button type="button" class="btn2" style="background:#131316;color:#fff;border:1px solid #232329" onclick="doLogout()">🚪 Logout</button></div>
+<div id="historyBox" class="card" style="display:none;margin-top:12px"><h1 style="font-size:17px;text-align:left">📜 History Clone</h1><div id="histList"></div></div>
+</div></div>
 <div class="toast" id="toast">✅ Berhasil bro!</div>
 <script>
-let isAdmin=false, mode='auto', curHD='', curPlay='', curTitle='', history=JSON.parse(localStorage.getItem('pung_hist')||'[]');
+let isAdmin=false, history=JSON.parse(localStorage.getItem('pung_hist')||'[]');
 function toast(t){let e=document.getElementById('toast');e.innerText=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),3000)}
 function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
-// LOGIN ADMIN DISEMBUNYIIN - CUMA USN + PW
-function doLogin(){ let u=document.getElementById('loginUser').value.trim(); let p=document.getElementById('loginPass').value.trim(); if(u==='doyz admin' && p==='doyz admin xestra'){ masuk('Admin DOYZ', true); return; } masuk(u||'Pung', false); }
-function masuk(n, admin){ isAdmin=admin; document.getElementById('haloNama').innerText=n; document.getElementById('userBadge').innerText='👤 '+n.toUpperCase(); if(admin){ document.getElementById('adminBox').classList.remove('hide'); }else{ document.getElementById('adminBox').classList.add('hide'); } showPage('page-home'); toast('✅ Welcome '+n); }
-function doReg(){ let n=document.getElementById('regNama').value.trim()||'Pung'; masuk(n,false); }
-function doLogout(){ isAdmin=false; document.getElementById('adminBox').classList.add('hide'); showPage('page-login'); }
-let totalVisit=parseInt(localStorage.getItem('doyz_total')||'1204'); totalVisit++; localStorage.setItem('doyz_total', totalVisit);
-let liveCount=120+Math.floor(Math.random()*40);
-function updateLive(){ liveCount+=Math.floor(Math.random()*5)-2; if(liveCount<80) liveCount=85; if(liveCount>220) liveCount=210; document.getElementById('liveCount1').innerText=liveCount; document.getElementById('liveCount2').innerText=liveCount; document.getElementById('totalVisit1').innerText=totalVisit.toLocaleString('id-ID'); document.getElementById('totalVisit2').innerText=totalVisit.toLocaleString('id-ID'); }
-updateLive(); setInterval(updateLive,3000);
-function showHist(){ document.getElementById('historyBox').style.display='block'; document.getElementById('historyBox').style.animation='popIn .4s both'; document.getElementById('histList').innerHTML=history.length?history.map(h=>`<div style="background:#f2f2f7;padding:12px;border-radius:14px;margin-top:10px">🎬 ${h.title}<br><small style="color:#00c853">${h.time}</small></div>`).join(''):'<p style="color:#888">Belum ada history</p>' }
-['t1','t2','t3','t4'].forEach((id,i)=>{document.getElementById(id).onclick=function(){document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('on')); if(this.parentElement.querySelectorAll('button').length===4){this.classList.add('on');} mode=['auto','video','foto','mp3'][i]}});
-document.getElementById('btnDl').onclick=dl;
-async function downloadFile(url, filename){ toast('📥 Lagi download bro...'); try{ const res=await fetch(url,{mode:'cors'}); if(!res.ok) throw new Error('gagal'); const blob=await res.blob(); if(blob.size<1000) throw new Error('kosong'); const blobUrl=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=blobUrl; a.download=filename; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(blobUrl),5000); toast('✅ Masuk File bro!'); }catch(e){ toast('📱 Kebuka, tahan -> Save'); window.open(url,'_blank'); } }
-async function dl(){ let link=document.getElementById('link').value.trim(); if(!link) return alert('Tempel link dulu bro'); let btn=document.getElementById('btnDl'); document.getElementById('loading').style.display='block'; document.getElementById('progBar').style.width='30%'; btn.innerText='⏳ LAGI AMBIL...'; try{
-let api='https://www.tikwm.com/api/?url='+encodeURIComponent(link)+'&hd=1';
-let isTikTok=link.includes('tiktok.com');
-if(!isTikTok){
-  // CLONER MODE - Ambil kodingan web lain
-  let proxies=['https://api.allorigins.win/raw?url='+encodeURIComponent(link),'https://corsproxy.io/?url='+encodeURIComponent(link),'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(link)];
-  let html='', ok=false; for(let p of proxies){ try{ let r=await fetch(p); if(r.ok){ html=await r.text(); if(html.length>500){ ok=true; break; } } }catch(e){} }
-  if(!ok) throw new Error('Web ke-protect bro, coba link lain');
-  document.getElementById('editor').value=html; document.getElementById('loading').style.display='none'; btn.innerText='⬇ AMBIL KODINGAN WEB'; document.getElementById('done').innerHTML=`<div style="background:#eafff0;border-radius:16px;padding:14px;margin-top:14px;animation:popIn .4s both"><b>✅ Kodingan ke ambil bro!</b><br><small>${html.length.toLocaleString()} karakter • ${html.split('\n').length} baris</small></div>`; toast('✅ Berhasil di clone!'); return;
+function doLogin(){let u=document.getElementById('loginUser').value.trim();let p=document.getElementById('loginPass').value.trim();if(u==='doyz admin'&&p==='doyz admin xestra'){masuk('Admin DOYZ',true);return}masuk(u||'Pung',false)}
+function masuk(n,admin){isAdmin=admin;document.getElementById('haloNama').innerText=n;document.getElementById('userBadge').innerText='👤 '+n.toUpperCase();if(admin)document.getElementById('adminBox').classList.remove('hide');else document.getElementById('adminBox').classList.add('hide');showPage('page-home');toast('✅ Welcome '+n)}
+function doReg(){let n=document.getElementById('regNama').value.trim()||'Pung';masuk(n,false)}
+function doLogout(){isAdmin=false;document.getElementById('adminBox').classList.add('hide');showPage('page-login')}
+function showHist(){document.getElementById('historyBox').style.display='block';document.getElementById('histList').innerHTML=history.length?history.map(h=>`<div style="background:#000;padding:12px;border-radius:12px;margin-top:10px">🌐 ${h.title}<br><small style="color:#a78bfa">${h.time}</small></div>`).join(''):'<p style="color:#888">Belum ada history</p>'}
+function updateStats(){let v=document.getElementById('editor').value;document.getElementById('statChars').innerText=v.length.toLocaleString('id-ID');document.getElementById('statLines').innerText=v.split('\n').length}
+document.getElementById('editor').addEventListener('input',updateStats);
+async function fetchWithTimeout(url,ms=8000){let c=new AbortController();let t=setTimeout(()=>c.abort(),ms);try{let r=await fetch(url,{signal:c.signal});clearTimeout(t);return r}catch(e){clearTimeout(t);throw e}}
+async function dl(){
+  let link=document.getElementById('link').value.trim();if(!link) return alert('Tempel link dulu bro!');if(!link.startsWith('http')) link='https://'+link;
+  let btn=document.getElementById('btnDl');btn.disabled=true;btn.innerText='⏳ LAGI AMBIL...';document.getElementById('loading').style.display='block';
+  try{
+    let proxies=[
+      'https://r.jina.ai/'+link,
+      'https://api.allorigins.win/raw?url='+encodeURIComponent(link),
+      'https://api.allorigins.win/get?url='+encodeURIComponent(link),
+      'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(link),
+      'https://corsproxy.io/?url='+encodeURIComponent(link),
+      link // direct, kalo web nya izinin CORS
+    ];
+    let html='',ok=false,used='';
+    for(let i=0;i<proxies.length;i++){
+      document.getElementById('loadText').innerText='Nyoba cara '+(i+1)+' / 6 - '+(i===0?'Jina AI (paling sakti)':i===5?'Direct Fetch':'Proxy '+(i+1));
+      document.getElementById('progBar').style.width=((i+1)/6*100)+'%';
+      try{
+        let r=await fetchWithTimeout(proxies[i],9000);
+        if(r.ok){let txt=await r.text();try{let j=JSON.parse(txt);if(j.contents) txt=j.contents;}catch(e){} if(txt.length>200 && (txt.includes('<')||txt.includes('html'))){html=txt;ok=true;used='Cara '+(i+1);break;}}
+      }catch(e){}
+    }
+    if(!ok) throw new Error('GAGAL_TOTAL');
+    document.getElementById('editor').value=html;updateStats();showCode();document.getElementById('loading').style.display='none';btn.disabled=false;btn.innerText='⬇ AMBIL KODE SEKARANG';
+    document.getElementById('done').innerHTML=`<div style="background:#0f2a15;border:1px solid #00c853;border-radius:14px;padding:12px;margin-top:12px"><b>✅ Berhasil! (${used})</b><br><small>${html.length.toLocaleString()} karakter • ${html.split('\n').length} baris</small></div>`;
+    history.unshift({title:link,time:new Date().toLocaleString()});localStorage.setItem('pung_hist',JSON.stringify(history.slice(0,20)));toast('✅ Berhasil di clone!');
+  }catch(e){
+    document.getElementById('loading').style.display='none';btn.disabled=false;btn.innerText='⬇ AMBIL KODE SEKARANG';
+    // JANGAN ALERT GAGAL DOANG, KASIH JALAN KELUAR
+    if(confirm('CodePen nge-block fetch bro. Mau gue bukain cara manual yang 100% pasti dapet kode nya?')) manualWay();
+  }
 }
-let res=await fetch(api); let j=await res.json(); let d=j.data; if(!d||(!d.play&&!d.hdplay)) throw new Error('Link ga valid bro');
-document.getElementById('progBar').style.width='85%'; let hdUrl=d.hdplay||d.play; let biasaUrl=d.play||d.hdplay; curHD=hdUrl; curPlay=biasaUrl; curTitle=d.title||'Video TikTok'; let music=d.music||''; let isSlide=d.images&&d.images.length>0; document.getElementById('loading').style.display='none'; document.getElementById('progBar').style.width='100%'; btn.innerText='⬇ AMBIL KODINGAN WEB';
-let box=document.getElementById('done'); let safeName=(curTitle.replace(/[^a-z0-9]/gi,'_').slice(0,40)||'doyz'); let mp3Html=music?`<div style="background:#f2f2f7;border-radius:16px;padding:14px;margin-top:12px"><b>🎵 MP3</b><audio controls src="${music}" style="width:100%;margin-top:8px"></audio><button class="btn btn-green" onclick="downloadFile('${music}','${safeName}.mp3')" style="margin-top:10px">⬇ DOWNLOAD MP3</button></div>`:'';
-let shareHtml=isAdmin?`<button class="btn" style="background:#25D366;margin-top:10px" onclick="window.open('https://wa.me/?text='+encodeURIComponent(curTitle+' '+curHD),'_blank')">📱 BAGIKAN KE SW</button>`:''; 
-let html=''; if(mode==='mp3'){ html=`<span style="background:#00c853;color:#fff;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:900">🎵 MP3 ASLI</span>`+mp3Html+shareHtml; } else if(mode==='foto'||(mode==='auto'&&isSlide)){ let g=d.images.map((im,i)=>`<div style="border-radius:14px;overflow:hidden;background:#000"><img src="${im}" style="width:100%;height:175px;object-fit:cover"><button class="btn" style="padding:12px;font-size:12px" onclick="downloadFile('${im}','${safeName}_FOTO.jpg')">⬇ DOWNLOAD FOTO ${i+1}</button></div>`).join(''); html=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">${g}</div>${shareHtml}`; } else { html=`<div style="border-radius:16px;overflow:hidden;background:#000;margin-top:14px"><video src="${curHD}" controls playsinline style="width:100%;display:block"></video></div><p style="font-weight:700;margin-top:10px">${curTitle}</p><button class="btn" style="background:#000;margin-top:10px" onclick="downloadFile('${curHD}','${safeName}_JERNIH.mp4')">⬇ DOWNLOAD JERNIH</button><button class="btn btn-ghost" onclick="downloadFile('${curPlay}','${safeName}.mp4')">⬇ DOWNLOAD VIDEO KE FILE</button>${shareHtml}${mp3Html}`; }
-box.innerHTML=html; document.getElementById('done2').innerHTML=`<button class="btn btn-ghost" style="margin-top:16px" onclick="document.getElementById('link').scrollIntoView({behavior:'smooth'})">⬇ DOWNLOAD LAGI</button>`; history.unshift({title:curTitle,time:new Date().toLocaleString()}); localStorage.setItem('pung_hist',JSON.stringify(history.slice(0,10))); toast('✅ Berhasil!'); }catch(e){ alert(e.message); document.getElementById('loading').style.display='none'; btn.innerText='⬇ AMBIL KODINGAN WEB'; } }
-function doPreview(){ let code=document.getElementById('editor').value; if(!code) return alert('Kodenya kosong bro!'); document.getElementById('tPrev').click(); document.getElementById('previewFrame').srcdoc=code; toast('👁️ Preview jalan!'); }
-function doBeautify(){ let ed=document.getElementById('editor'); ed.value=ed.value.replace(/<title>.*?<\/title>/i,'<title>DOYZ - Edit by Doyzz</title>'); toast('✨ Udah di rapiin!'); }
-function doDownload(){ let code=document.getElementById('editor').value; if(!code) return alert('Kodenya kosong!'); let blob=new Blob([code],{type:'text/html'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='doyz-clone-base.html'; a.click(); toast('✅ Ke download!'); }
-document.getElementById('tCode').onclick=function(){ document.getElementById('editor').style.display='block'; document.getElementById('previewBox').style.display='none'; this.classList.add('on'); document.getElementById('tPrev').classList.remove('on'); }
-document.getElementById('tPrev').onclick=function(){ doc
+function manualWay(){
+  let link=document.getElementById('link').value.trim()||'https://doy-tools.github.io/downloader/';
+  if(!link.startsWith('http')) link='https://'+link;
+  // Buka view-source di tab baru - ini yang paling pasti, ga bisa di block proxy
+  window.open('view-source:'+link,'_blank');
+  setTimeout(()=>{ alert('Udah kebuka tab baru bro!\n\n1. Di tab baru itu pencet CTRL+A terus CTRL+C\n2. Balik kesini, paste di kotak KODE\n3. Klik PREVIEW / DOWNLOAD\n\nItu cara 100% pasti dapet, ga bisa di block sama proxy / CodePen.'); },500);
+}
+function showCode(){document.getElementById('editor').style.display='block';document.getElementById('previewBox').style.display='none';document.getElementById('tCode').classList.add('on');document.getElementById('tPrev').classList.remove('on')}
+function showPrev(){document.getElementById('editor').style.display='none';document.getElementById('previewBox').style.display='block';document.getElementById('tPrev').classList.add('on');document.getElementById('tCode').classList.remove('on');doPreview()}
+function doPreview(){let code=document.getElementById('editor').value;if(!code) return alert('Kodenya kosong bro! Ambil dulu');document.getElementById('previewFrame').srcdoc=code;toast('👁️ Preview jalan!')}
+function doBeautify(){let ed=document.getElementById('editor');ed.value=ed.value.replace(/<title>.*?<\/title>/i,'<title>DOYZ Clone - Edit by Doyzz</title>');updateStats();toast('✨ Udah di rapiin!')}
+function doDownload(){let code=document.getElementById('editor').value;if(!code) return alert('Kodenya kosong!');let blob=new Blob([code],{type:'text/html'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='doyz-clone-v29.63.html';a.click();toast('✅ Ke download!')}
+function doCopy(){let ed=document.getElementById('editor');ed.select();document.execCommand('copy');toast('📋 Udah ke copy!')}
+function doClear(){document.getElementById('editor').value='';updateStats()}
+</script>
+</body>
+</html>
