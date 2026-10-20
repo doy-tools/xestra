@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DOYZ CLONER V1.2 beta</title>
+<title>DOYZ CLONER V1.4 BETA</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',-apple-system,Arial}
 body{background:#0a0a0c;color:#fff;min-height:100vh}
 .page{display:none}.page.active{display:block;animation:fade .35s ease both}
 @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 .topbar{max-width:520px;margin:0 auto;padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-weight:900;font-size:19px}.logo b{color:#a78bfa}
 .pill{background:#1a1a1e;border:1px solid #2a2a30;padding:6px 11px;border-radius:20px;font-size:11px;font-weight:700;color:#a78bfa}
@@ -19,32 +20,32 @@ h1{font-size:23px;font-weight:900}h1 span{color:#a78bfa}
 .sub{color:#8b8b93;font-size:13px;margin:8px 0 14px}
 .input-box{display:flex;gap:8px;background:#000;border:1px solid #2a2a30;border-radius:14px;padding:6px 6px 6px 14px;align-items:center}
 .input-box input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:14px;min-width:0}
-.btn-main{width:100%;padding:16px;border:none;border-radius:14px;background:linear-gradient(90deg,#7c3aed,#a78bfa);color:#fff;font-weight:900;font-size:15px;cursor:pointer;margin-top:12px;box-shadow:0 8px 25px rgba(124,58,237,.35);z-index:99;position:relative}
-.btn-main:active{transform:scale(.97)}
-.btn-main:disabled{opacity:.6}
+.btn-main{width:100%;padding:16px;border:none;border-radius:14px;background:linear-gradient(90deg,#7c3aed,#a78bfa);color:#fff;font-weight:900;font-size:15px;cursor:pointer;margin-top:12px}
+.btn-main:active{transform:scale(.97)}.btn-main:disabled{opacity:.6}
 .input-row{position:relative;margin-bottom:12px}.input-row input{width:100%;padding:15px 14px 15px 42px;border-radius:14px;background:#000;border:1px solid #2a2a30;color:#fff;outline:none;font-size:14px}
 .input-row .ic{position:absolute;left:13px;top:50%;transform:translateY(-50%)}
-.btn{width:100%;padding:15px;border:none;border-radius:14px;background:linear-gradient(90deg,#7c3aed,#a78bfa);color:#fff;font-weight:800;cursor:pointer;z-index:99}
+.btn{width:100%;padding:15px;border:none;border-radius:14px;background:linear-gradient(90deg,#7c3aed,#a78bfa);color:#fff;font-weight:800;cursor:pointer}
 .btn-ghost{background:#1e1e22;color:#fff;margin-top:10px}
 .tabs{display:flex;gap:6px;background:#000;padding:5px;border-radius:14px;margin:14px 0}.tabs button{flex:1;padding:11px;border:none;border-radius:10px;background:transparent;color:#888;font-weight:700;cursor:pointer}.tabs button.on{background:#fff;color:#000}
 textarea{width:100%;height:400px;background:#000;color:#c4b5fd;border:1px solid #232329;border-radius:14px;padding:14px;font-family:monospace;font-size:12px;line-height:1.6;outline:none;resize:vertical}
 #previewBox{width:100%;height:400px;background:#fff;border-radius:14px;overflow:hidden;display:none}
 #previewBox iframe{width:100%;height:100%;border:none}
-.row{display:flex;gap:8px;margin-top:10px}.btn2{flex:1;padding:13px;border:none;border-radius:12px;font-weight:800;cursor:pointer;z-index:99}.btn2:active{transform:scale(.95)}
+.row{display:flex;gap:8px;margin-top:10px}.btn2{flex:1;padding:13px;border:none;border-radius:12px;font-weight:800;cursor:pointer}.btn2:active{transform:scale(.95)}
 .stats{display:flex;gap:8px;margin:12px 0}.stat{flex:1;background:#000;border:1px solid #232329;border-radius:14px;padding:10px;text-align:center}.stat b{color:#a78bfa;display:block}.stat span{font-size:10px;color:#888}
-.link{color:#a78bfa;text-align:center;font-size:13px;margin-top:12px;cursor:pointer;padding:10px;z-index:99;position:relative}
+.link{color:#a78bfa;text-align:center;font-size:13px;margin-top:12px;cursor:pointer;padding:10px}
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:#fff;color:#000;padding:12px 20px;border-radius:20px;font-weight:800;font-size:13px;z-index:9999;transition:.35s}.toast.show{transform:translateX(-50%) translateY(0)}
 .spin{width:28px;height:28px;border:3px solid #222;border-top-color:#a78bfa;border-radius:50%;margin:0 auto 8px;animation:spin .8s linear infinite}
 #loading{display:none;text-align:center;padding:14px;color:#a78bfa;font-weight:700;font-size:13px}
 .progress{height:4px;background:#222;border-radius:10px;overflow:hidden;margin:8px 0}.progress i{display:block;height:100%;background:#a78bfa;width:0;transition:.4s}
 .hide{display:none!important}
+.mode-box{display:flex;gap:6px;margin:12px 0}.mode-box button{flex:1;padding:10px;border:1px solid #2a2a30;background:#000;color:#aaa;border-radius:12px;font-weight:700;cursor:pointer;font-size:12px}.mode-box button.on{background:#a78bfa;color:#fff;border-color:#a78bfa}
 </style>
 </head>
 <body>
 <div id="page-login" class="page active">
-<div class="topbar"><div class="logo">🟣 DOYZ <b>CLONER</b></div><div class="pill">v29.63 FIX</div></div>
+<div class="topbar"><div class="logo">🟣 DOYZ <b>CLONER</b></div><div class="pill">V1.4 BETA</div></div>
 <div class="wrap"><div class="card" style="text-align:center">
-<div style="font-size:48px">🛠️</div><h1 style="margin-top:10px">Clone Web<br><span>Jadi Base Lu</span></h1><p class="sub">Fix proxy gagal di CodePen • Sekarang tembus</p>
+<div style="font-size:48px;animation:float 3s ease-in-out infinite">🛠️</div><h1 style="margin-top:10px">Clone Web<br><span>Jadi Base Lu</span></h1><p class="sub">V1.4 Beta • Fix Wayground / React</p>
 <div class="input-row"><span class="ic">👤</span><input id="loginUser" placeholder="Username"></div>
 <div class="input-row"><span class="ic">🔒</span><input id="loginPass" type="password" placeholder="Password"></div>
 <button type="button" class="btn" onclick="doLogin()">MASUK →</button>
@@ -53,7 +54,7 @@ textarea{width:100%;height:400px;background:#000;color:#c4b5fd;border:1px solid 
 </div></div>
 </div>
 <div id="page-register" class="page">
-<div class="topbar"><div class="logo">🟣 DOYZ <b>CLONER</b></div><div class="pill">DAFTAR</div></div>
+<div class="topbar"><div class="logo">🟣 DOYZ <b>CLONER</b></div><div class="pill">V1.4 BETA</div></div>
 <div class="wrap"><div class="card" style="text-align:center"><div style="font-size:44px">✨</div><h1>Buat Akun</h1>
 <div class="input-row" style="margin-top:14px"><span class="ic">😎</span><input id="regNama" placeholder="Nama Lu"></div>
 <div class="input-row"><span class="ic">👤</span><input id="regUser" placeholder="Username"></div>
@@ -63,29 +64,30 @@ textarea{width:100%;height:400px;background:#000;color:#c4b5fd;border:1px solid 
 <div id="page-home" class="page">
 <div class="topbar"><div class="logo">🟣 DOYZ <b>CLONER</b></div><div class="pill" id="userBadge">👤 GUEST</div></div>
 <div class="wrap"><div class="card">
-<h1>Ambil Kode <span>Web Lain</span></h1><p class="sub">Halo <b id="haloNama" style="color:#a78bfa">Pung</b> • Tempel link, langsung ke ambil</p>
+<h1>Ambil Kode <span>Web Lain</span></h1><p class="sub">Halo <b id="haloNama" style="color:#a78bfa">Pung</b> • V1.4 Beta</p>
 <div id="adminBox" class="hide" style="background:linear-gradient(90deg,#7c3aed,#a78bfa);border-radius:14px;padding:12px;margin:10px 0;font-size:13px"><b>👑 ADMIN MODE AKTIF</b><br><small>Pro kebuka diam-diam</small></div>
+<div class="mode-box"><button type="button" id="mStatic" class="on" onclick="setMode('static',this)">📄 WEB BIASA</button><button type="button" onclick="setMode('render',this)">⚡ WEB REACT</button><button type="button" onclick="setMode('jina',this)">🤖 AI READER</button></div>
 <div class="stats"><div class="stat"><b id="statChars">0</b><span>KARAKTER</span></div><div class="stat"><b id="statLines">0</b><span>BARIS</span></div><div class="stat"><b>HTML</b><span>CSS + JS</span></div></div>
-<div class="input-box"><span>🔗</span><input id="link" placeholder="https://doy-tools.github.io/downloader/"></div>
+<div class="input-box"><span>🔗</span><input id="link" value="https://wayground.com/join" placeholder="https://contoh.com"></div>
 <button type="button" class="btn-main" id="btnDl" onclick="dl()">⬇ AMBIL KODE SEKARANG</button>
 <div id="loading"><div class="spin"></div><span id="loadText">Lagi nyoba...</span><div class="progress"><i id="progBar"></i></div></div>
 <div id="done"></div>
 <div class="tabs"><button type="button" id="tCode" class="on" onclick="showCode()">💻 KODE</button><button type="button" id="tPrev" onclick="showPrev()">👁️ PREVIEW</button></div>
-<textarea id="editor" placeholder="Kodingan bakal muncul disini...&#10;&#10;Kalo masih gagal, klik tombol CARA MANUAL dibawah"></textarea>
+<textarea id="editor" placeholder="Kodingan bakal muncul disini..."></textarea>
 <div id="previewBox"><iframe id="previewFrame"></iframe></div>
 <div class="row"><button type="button" class="btn2" style="background:#fff;color:#000" onclick="doPreview()">👁️ PREVIEW</button><button type="button" class="btn2" style="background:#a78bfa;color:#fff" onclick="doBeautify()">✨ RAPIIN</button><button type="button" class="btn2" style="background:#00c853;color:#fff" onclick="doDownload()">⬇ DOWNLOAD</button></div>
 <div class="row"><button type="button" class="btn2" style="background:#1e1e22;color:#fff" onclick="doCopy()">📋 COPY</button><button type="button" class="btn2" style="background:#ff3b30;color:#fff" onclick="doClear()">🗑 CLEAR</button></div>
-<button type="button" class="btn2" style="background:#FFC107;color:#000;width:100%;margin-top:10px" onclick="manualWay()">🛠️ CARA MANUAL - PASTI BERHASIL 100%</button>
-<p style="font-size:11px;color:#888;text-align:center;margin-top:8px;line-height:1.5">Kalo di CodePen masih gagal, jangan pake CodePen bro.<br>Deploy di Vercel / buka file ini langsung di Chrome, pasti tembus.</p>
+<button type="button" class="btn2" style="background:#FFC107;color:#000;width:100%;margin-top:10px" onclick="manualWay()">🛠️ CARA PALING PASTI</button>
 </div>
 <div class="row" style="margin-top:12px"><button type="button" class="btn2" style="background:#131316;color:#fff;border:1px solid #232329" onclick="showPage('page-home')">🏠 Home</button><button type="button" class="btn2" style="background:#131316;color:#fff;border:1px solid #232329" onclick="showHist()">📜 History</button><button type="button" class="btn2" style="background:#131316;color:#fff;border:1px solid #232329" onclick="doLogout()">🚪 Logout</button></div>
 <div id="historyBox" class="card" style="display:none;margin-top:12px"><h1 style="font-size:17px;text-align:left">📜 History Clone</h1><div id="histList"></div></div>
 </div></div>
-<div class="toast" id="toast">✅ Berhasil bro!</div>
+<div class="toast" id="toast">✅ Kode Berhasil Di Ambil ✅!</div>
 <script>
-let isAdmin=false, history=JSON.parse(localStorage.getItem('pung_hist')||'[]');
+let isAdmin=false,mode='static',history=JSON.parse(localStorage.getItem('pung_hist')||'[]');
 function toast(t){let e=document.getElementById('toast');e.innerText=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),3000)}
 function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
+function setMode(m,el){mode=m;document.querySelectorAll('.mode-box button').forEach(b=>b.classList.remove('on'));el.classList.add('on')}
 function doLogin(){let u=document.getElementById('loginUser').value.trim();let p=document.getElementById('loginPass').value.trim();if(u==='doyz admin'&&p==='doyz admin xestra'){masuk('Admin DOYZ',true);return}masuk(u||'Pung',false)}
 function masuk(n,admin){isAdmin=admin;document.getElementById('haloNama').innerText=n;document.getElementById('userBadge').innerText='👤 '+n.toUpperCase();if(admin)document.getElementById('adminBox').classList.remove('hide');else document.getElementById('adminBox').classList.add('hide');showPage('page-home');toast('✅ Welcome '+n)}
 function doReg(){let n=document.getElementById('regNama').value.trim()||'Pung';masuk(n,false)}
@@ -93,50 +95,32 @@ function doLogout(){isAdmin=false;document.getElementById('adminBox').classList.
 function showHist(){document.getElementById('historyBox').style.display='block';document.getElementById('histList').innerHTML=history.length?history.map(h=>`<div style="background:#000;padding:12px;border-radius:12px;margin-top:10px">🌐 ${h.title}<br><small style="color:#a78bfa">${h.time}</small></div>`).join(''):'<p style="color:#888">Belum ada history</p>'}
 function updateStats(){let v=document.getElementById('editor').value;document.getElementById('statChars').innerText=v.length.toLocaleString('id-ID');document.getElementById('statLines').innerText=v.split('\n').length}
 document.getElementById('editor').addEventListener('input',updateStats);
-async function fetchWithTimeout(url,ms=8000){let c=new AbortController();let t=setTimeout(()=>c.abort(),ms);try{let r=await fetch(url,{signal:c.signal});clearTimeout(t);return r}catch(e){clearTimeout(t);throw e}}
+async function fetchTO(url,ms=10000){let c=new AbortController();let t=setTimeout(()=>c.abort(),ms);try{let r=await fetch(url,{signal:c.signal});clearTimeout(t);return r}catch(e){clearTimeout(t);throw e}}
 async function dl(){
   let link=document.getElementById('link').value.trim();if(!link) return alert('Tempel link dulu bro!');if(!link.startsWith('http')) link='https://'+link;
   let btn=document.getElementById('btnDl');btn.disabled=true;btn.innerText='⏳ LAGI AMBIL...';document.getElementById('loading').style.display='block';
-  try{
-    let proxies=[
-      'https://r.jina.ai/'+link,
-      'https://api.allorigins.win/raw?url='+encodeURIComponent(link),
-      'https://api.allorigins.win/get?url='+encodeURIComponent(link),
-      'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(link),
-      'https://corsproxy.io/?url='+encodeURIComponent(link),
-      link // direct, kalo web nya izinin CORS
-    ];
-    let html='',ok=false,used='';
-    for(let i=0;i<proxies.length;i++){
-      document.getElementById('loadText').innerText='Nyoba cara '+(i+1)+' / 6 - '+(i===0?'Jina AI (paling sakti)':i===5?'Direct Fetch':'Proxy '+(i+1));
-      document.getElementById('progBar').style.width=((i+1)/6*100)+'%';
-      try{
-        let r=await fetchWithTimeout(proxies[i],9000);
-        if(r.ok){let txt=await r.text();try{let j=JSON.parse(txt);if(j.contents) txt=j.contents;}catch(e){} if(txt.length>200 && (txt.includes('<')||txt.includes('html'))){html=txt;ok=true;used='Cara '+(i+1);break;}}
-      }catch(e){}
-    }
-    if(!ok) throw new Error('GAGAL_TOTAL');
-    document.getElementById('editor').value=html;updateStats();showCode();document.getElementById('loading').style.display='none';btn.disabled=false;btn.innerText='⬇ AMBIL KODE SEKARANG';
-    document.getElementById('done').innerHTML=`<div style="background:#0f2a15;border:1px solid #00c853;border-radius:14px;padding:12px;margin-top:12px"><b>✅ Berhasil! (${used})</b><br><small>${html.length.toLocaleString()} karakter • ${html.split('\n').length} baris</small></div>`;
-    history.unshift({title:link,time:new Date().toLocaleString()});localStorage.setItem('pung_hist',JSON.stringify(history.slice(0,20)));toast('✅ Berhasil di clone!');
-  }catch(e){
-    document.getElementById('loading').style.display='none';btn.disabled=false;btn.innerText='⬇ AMBIL KODE SEKARANG';
-    // JANGAN ALERT GAGAL DOANG, KASIH JALAN KELUAR
-    if(confirm('CodePen nge-block fetch bro. Mau gue bukain cara manual yang 100% pasti dapet kode nya?')) manualWay();
+  let proxies=[];
+  if(mode==='render'){proxies=['https://api.allorigins.win/raw?url='+encodeURIComponent(link),'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(link),'https://corsproxy.io/?url='+encodeURIComponent(link),'https://api.cors.lol/?url='+encodeURIComponent(link),'https://proxy.cors.sh/'+link,'https://r.jina.ai/'+link];}
+  else if(mode==='jina'){proxies=['https://r.jina.ai/'+link,'https://api.allorigins.win/raw?url='+encodeURIComponent(link)];}
+  else{proxies=['https://api.allorigins.win/raw?url='+encodeURIComponent(link),'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(link),'https://corsproxy.io/?url='+encodeURIComponent(link),'https://api.cors.lol/?url='+encodeURIComponent(link),'https://api.allorigins.win/get?url='+encodeURIComponent(link),link];}
+  let html='',ok=false,used='';
+  for(let i=0;i<proxies.length;i++){
+    document.getElementById('loadText').innerText='V1.4 • Mode '+mode+' • Nyoba '+(i+1)+' / '+proxies.length;
+    document.getElementById('progBar').style.width=((i+1)/proxies.length*100)+'%';
+    try{let r=await fetchTO(proxies[i],11000);if(r.ok){let txt=await r.text();try{let j=JSON.parse(txt);if(j.contents) txt=j.contents;}catch(e){} if(txt.length>150){html=txt;ok=true;used='Proxy '+(i+1);break;}}}catch(e){}
   }
+  document.getElementById('loading').style.display='none';btn.disabled=false;btn.innerText='⬇ AMBIL KODE SEKARANG';
+  if(!ok){document.getElementById('done').innerHTML=`<div style="background:#3a1a1a;border:1px solid #ff3b30;border-radius:14px;padding:12px;margin-top:12px"><b>⚠️ Web React / Ke-protect</b><br><small>Pake tombol kuning dibawah</small></div>`;return;}
+  if(html.includes('id="root"') && html.length<5000){document.getElementById('done').innerHTML=`<div style="background:#2a1a00;border:1px solid #FFC107;border-radius:14px;padding:12px;margin-top:12px"><b>⚠️ Ini web React bro</b><br><small>Yang ke ambil cuma kerangka nya</small></div>`;}else{document.getElementById('done').innerHTML=`<div style="background:#0f2a15;border:1px solid #00c853;border-radius:14px;padding:12px;margin-top:12px"><b>✅ Berhasil! (${used})</b><br><small>${html.length.toLocaleString()} karakter • ${html.split('\n').length} baris • V1.4 Beta</small></div>`;}
+  document.getElementById('editor').value=html;updateStats();showCode();
+  history.unshift({title:link,time:new Date().toLocaleString()});localStorage.setItem('pung_hist',JSON.stringify(history.slice(0,20)));toast('✅ Berhasil!');
 }
-function manualWay(){
-  let link=document.getElementById('link').value.trim()||'https://doy-tools.github.io/downloader/';
-  if(!link.startsWith('http')) link='https://'+link;
-  // Buka view-source di tab baru - ini yang paling pasti, ga bisa di block proxy
-  window.open('view-source:'+link,'_blank');
-  setTimeout(()=>{ alert('Udah kebuka tab baru bro!\n\n1. Di tab baru itu pencet CTRL+A terus CTRL+C\n2. Balik kesini, paste di kotak KODE\n3. Klik PREVIEW / DOWNLOAD\n\nItu cara 100% pasti dapet, ga bisa di block sama proxy / CodePen.'); },500);
-}
+function manualWay(){let link=document.getElementById('link').value.trim()||'https://wayground.com/join';window.open(link,'_blank');setTimeout(()=>{alert('CARA PASTI:\n\n1. Web udah kebuka\n2. CTRL+U / View Source\n3. CTRL+A, CTRL+C\n4. Paste disini')},600);}
 function showCode(){document.getElementById('editor').style.display='block';document.getElementById('previewBox').style.display='none';document.getElementById('tCode').classList.add('on');document.getElementById('tPrev').classList.remove('on')}
 function showPrev(){document.getElementById('editor').style.display='none';document.getElementById('previewBox').style.display='block';document.getElementById('tPrev').classList.add('on');document.getElementById('tCode').classList.remove('on');doPreview()}
-function doPreview(){let code=document.getElementById('editor').value;if(!code) return alert('Kodenya kosong bro! Ambil dulu');document.getElementById('previewFrame').srcdoc=code;toast('👁️ Preview jalan!')}
-function doBeautify(){let ed=document.getElementById('editor');ed.value=ed.value.replace(/<title>.*?<\/title>/i,'<title>DOYZ Clone - Edit by Doyzz</title>');updateStats();toast('✨ Udah di rapiin!')}
-function doDownload(){let code=document.getElementById('editor').value;if(!code) return alert('Kodenya kosong!');let blob=new Blob([code],{type:'text/html'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='doyz-clone-v29.63.html';a.click();toast('✅ Ke download!')}
+function doPreview(){let code=document.getElementById('editor').value;if(!code) return alert('Kodenya kosong bro!');document.getElementById('previewFrame').srcdoc=code;toast('👁️ Preview jalan!')}
+function doBeautify(){let ed=document.getElementById('editor');ed.value=ed.value.replace(/<title>.*?<\/title>/i,'<title>DOYZ Clone V1.4 Beta</title>');updateStats();toast('✨ Udah di rapiin!')}
+function doDownload(){let code=document.getElementById('editor').value;if(!code) return alert('Kodenya kosong!');let blob=new Blob([code],{type:'text/html'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='doyz-clone-v1.4-beta.html';a.click();toast('✅ Ke download!')}
 function doCopy(){let ed=document.getElementById('editor');ed.select();document.execCommand('copy');toast('📋 Udah ke copy!')}
 function doClear(){document.getElementById('editor').value='';updateStats()}
 </script>
